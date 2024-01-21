@@ -1,0 +1,244 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "desc": "this is a sample text",
+      "bookmarks": [
+        {
+          "id": "1",
+          "title": "Help children get better education 1",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        },
+        {
+          "id": "2",
+          "title": "Help children get better education",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        },
+        {
+          "id": "3",
+          "title": "Help children get better education",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        },
+        {
+          "id": "4",
+          "title": "Help children get better education",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "json-server",
+      "desc": "this is a sample text",
+      "bookmarks": [
+        {
+          "id": "1",
+          "title": "Help children get better education 2",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        },
+        {
+          "id": "2",
+          "title": "Help children get better education",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        },
+        {
+          "id": "3",
+          "title": "Help children get better education",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        },
+        {
+          "id": "4",
+          "title": "Help children get better education",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "json-server",
+      "desc": "this is a sample text",
+      "bookmarks": [
+        {
+          "id": "1",
+          "title": "Help children get better education 3",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        },
+        {
+          "id": "2",
+          "title": "Help children get better education",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        },
+        {
+          "id": "3",
+          "title": "Help children get better education",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        },
+        {
+          "id": "4",
+          "title": "Help children get better education",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "json-server",
+      "desc": "this is a sample text",
+      "bookmarks": [
+        {
+          "id": "1",
+          "title": "Help children get better education 4",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        },
+        {
+          "id": "2",
+          "title": "Help children get better education",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        },
+        {
+          "id": "3",
+          "title": "Help children get better education",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        },
+        {
+          "id": "4",
+          "title": "Help children get better education",
+          "createdAt": "2023-01-28T15:35:53.607+0000"
+        }
+      ]
+    }
+  ],
+  "logins": [
+    {
+      "id": 1,
+      "name": "pawan",
+      "email": "xyz",
+      "password": "xyz"
+    },
+    {
+      "name": "pawan",
+      "email": "pawan@realpage.com",
+      "password": "123456",
+      "id": 2
+    },
+    {
+      "name": "pawan",
+      "email": "pawan@realpage.com",
+      "password": "123456",
+      "id": 3
+    },
+    {
+      "name": "pawan",
+      "email": "pawan@realpage.com",
+      "password": "123456",
+      "id": 4
+    },
+    {
+      "name": "pawan",
+      "email": "pawan@realpage.com",
+      "password": "123456",
+      "id": 5
+    },
+    {
+      "name": "pawan",
+      "email": "pawan@realpage.com",
+      "password": "123456",
+      "id": 6
+    },
+    {
+      "name": "pawan",
+      "email": "pawan@realpage.com",
+      "password": "123456",
+      "id": 7
+    },
+    {
+      "name": "teja juluri",
+      "email": "teja@gmail.com",
+      "password": "L@Vw34zEdQD.tt",
+      "id": 8
+    },
+    {
+      "email": "teja@gmail.com",
+      "password": "L@Vw34zEdQD.tt",
+      "id": 9
+    },
+    {
+      "email": "pawan@realpage.com",
+      "password": "123456",
+      "id": 10
+    },
+    {
+      "email": "teja@gmail.com",
+      "password": "L@Vw34zEdQD.tt",
+      "id": 11
+    },
+    {
+      "email": "teja@gmail.com",
+      "password": "L@Vw34zEdQD.tt",
+      "id": 12
+    },
+    {
+      "email": "teja@gmail.com",
+      "password": "L@Vw34zEdQD.tt",
+      "id": 13
+    },
+    {
+      "email": "teja@gmail.com",
+      "password": "L@Vw34zEdQD.tt",
+      "id": 14
+    },
+    {
+      "email": "teja@gmail.com",
+      "password": "L@Vw34zEdQD.tt",
+      "id": 15
+    },
+    {
+      "name": "pawan",
+      "email": "19B81A0430@cvr.ac.in",
+      "password": "123456",
+      "id": 16
+    },
+    {
+      "email": "teja@gmail.com",
+      "password": "L@Vw3bjdb",
+      "id": 17
+    },
+    {
+      "email": "teja@gmail.com",
+      "password": "L@Vw34zEdQD.tt",
+      "id": 18
+    },
+    {
+      "email": "teja@gmail.com",
+      "password": "L@Vw34zEdQD.tt",
+      "id": 19
+    },
+    {
+      "email": "teja@gmail.com",
+      "password": "L@Vw34zEdQD.tt",
+      "id": 20
+    },
+    {
+      "email": "pawan@realpage.com",
+      "password": "123456",
+      "id": 21
+    }
+  ],
+  "bookmarks": [
+    {
+      "id": "1",
+      "bookmarkName": "",
+      "link": "",
+      "category": "",
+      "bookmarkType": ""
+    },
+    {
+      "bookmarkName": "sdfd",
+      "link": "fvvdfhghguy",
+      "category": "yyguhbj",
+      "bookmarkType": "Public",
+      "id": "NQAeryU"
+    }
+  ]
+}
