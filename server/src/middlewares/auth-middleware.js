@@ -16,14 +16,13 @@ const protect = async(req,res,next)=>{
             throw new AppError("User Not found",StatusCodes.UNAUTHORIZED)
         req.user = user
         req.user.accessToken=token[1]
-        console.log("ru=",req.user)
         next()
     }catch(error){
-        ErrorResponse.error=error;
+        ErrorResponse.error="JsonWebTokenError"
         return res.
-              status(error.statusCode)
+              status(StatusCodes.BAD_REQUEST)
               .json(ErrorResponse);  
     }
 }
 
-module.exports=protect
+module.exports={protect}

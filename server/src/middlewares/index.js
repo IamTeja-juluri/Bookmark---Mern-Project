@@ -3,5 +3,6 @@ module.exports={
     CategoryMiddlewares:require("./category-middleware"),
     BookMarksMiddlewares:require("./bookmarks-middleware"),
     AuthMiddlewares:require("./auth-middleware"),
-    PaginatedResultsMiddlewares: require("./paginatedresults-middlewares")
+    PaginatedResultsMiddlewares: require("./paginatedresults-middlewares"),
+    CollectionMiddlewares : require("./collection-middleware")
 }
