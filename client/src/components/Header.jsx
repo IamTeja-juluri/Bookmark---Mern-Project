@@ -38,7 +38,7 @@ const Header = () => {
             className="flex items-center border-2 border-blue-500 px-6 py-2 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300"
             onClick={() => setAddBookmarkModal(true)}
           >
-            <span>Add Bookmark</span>
+            <span>Add Collection</span>
           </button>
         </div>
         

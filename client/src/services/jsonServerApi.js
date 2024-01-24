@@ -1,13 +1,23 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+const getToken = (state) =>state.user.userInfo.accessToken
+
 export const jsonServerApi = createApi({
   reducerPath: 'jsonServerApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api/v1' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api/v1',
+  prepareHeaders: async (headers, { getState }) => {
+    const token = getToken(getState());
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
+    }
+    return headers;
+  },
+}),
   tagTypes: ["Posts"],
   endpoints: (builder) => ({
-    getCategories: builder.query({
-      query: () => "category",
-      providesTags: ["Posts"],
+    getCollections: builder.query({
+      query: () => `collection`,
+      providesTags: ["Posts"]
     }),
 
     getBookmarks: builder.query({
@@ -20,4 +30,4 @@ export const jsonServerApi = createApi({
   }),
 });
 
-export const { useGetCategoriesQuery, useGetBookmarksQuery, useGetLatestBookmarksQuery } = jsonServerApi;
+export const { useGetCollectionsQuery, useGetBookmarksQuery, useGetLatestBookmarksQuery } = jsonServerApi;

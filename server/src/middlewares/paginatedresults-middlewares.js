@@ -4,6 +4,7 @@ function paginatedResults(model,sortFilter){
 
     return async(req,res,next)=>{
         try{
+            console.log("hi from paginated middleware")
             const page = parseInt(req.query.page,10) || 1 // default page 1 
             const limit = parseInt(req.query.limit,10) || 10  // default limit 10
             const startIndex = (page-1)*limit

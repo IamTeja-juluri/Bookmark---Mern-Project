@@ -108,7 +108,7 @@ export const forgotPassword = async ({ email }) => {
 };
 
 
-export const addBookmark = async ({ bookmarkName,link,category,bookmarkType, token }) => {
+export const addBookmark = async ({ name,collectionType,description, token }) => {
   try {
 
     // const config = {
@@ -118,11 +118,10 @@ export const addBookmark = async ({ bookmarkName,link,category,bookmarkType, tok
     //   },
     // };
 
-    const data = await axios.post('http://localhost:5000/api/v1/category/bookmark/new', {
-      bookmarkName,
-      link,
-      category,
-      bookmarkType
+    const data = await axios.post('http://localhost:5000/api/v1/collection/new', {
+      name,
+      collectionType,
+      description,
     }, {
       headers: {
         'Content-Type': 'application/json',

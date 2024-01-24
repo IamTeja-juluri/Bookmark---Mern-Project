@@ -8,6 +8,7 @@ class collectionRepository extends CrudRepository{
     }
 
     async getCollections(data){
+        console.log(data.headers)
         const user = data.user
         let query
         if(user)

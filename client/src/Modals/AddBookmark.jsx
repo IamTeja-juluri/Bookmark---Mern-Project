@@ -7,20 +7,19 @@ import toast from "react-hot-toast";
 
 import { IoClose } from "react-icons/io5";
 import { addBookmark } from "../services/index/users";
-import { useGetCategoriesQuery } from "../services/jsonServerApi";
+import { useGetCollectionsQuery } from "../services/jsonServerApi";
 
 const AddBookmark = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const userState = useSelector((state) => state.user);
-  const { isError, isSuccess, data, error } = useGetCategoriesQuery();
+  const { isError, isSuccess, data, error } = useGetCollectionsQuery();
 
   
   
-
   const { mutate, isLoading } = useMutation({
-    mutationFn: ({ bookmarkName, link, category, bookmarkType }) => {
+    mutationFn: ({ name,description,collectionType }) => {
       
-      return addBookmark({ bookmarkName, link, category, bookmarkType, token: userState.userInfo.accessToken });
+      return addBookmark({ name,description,collectionType, token: userState.userInfo.accessToken });
     },
     onSuccess: (data) => {
       console.log(data);
@@ -38,10 +37,9 @@ const AddBookmark = ({ isOpen, onClose }) => {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      bookmarkName: "",
-      link: "",
-      category: "",
-      bookmarkType: "",
+      name: "",
+      description:"",
+      collectionType: ""
     },
     mode: "onChange",
   });
@@ -54,8 +52,8 @@ const AddBookmark = ({ isOpen, onClose }) => {
   // }, [navigate, userState.userInfo]);
 
   const submitHandler = (data) => {
-    const { bookmarkName, link, category, bookmarkType } = data;
-    mutate({ bookmarkName, link, category, bookmarkType });
+    const { name,description,collectionType } = data;
+    mutate({ name,description,collectionType });
   };
 
   // if(!userState.userInfo){
@@ -81,144 +79,108 @@ const AddBookmark = ({ isOpen, onClose }) => {
             <div className="relative px-24 py-4 bg-white shadow-lg sm:rounded-3xl sm:py-16">
               <div className="max-w-md mx-auto">
                 <div>
-                  <h1 className="text-2xl font-semibold">Add Bookmark</h1>
+                  <h1 className="text-3xl text-blue-400 font-semibold">Create Collection</h1>
                 </div>
                 <form autoComplete="off" onSubmit={handleSubmit(submitHandler)}>
                   <div className="divide-y divide-gray-200">
                     <div className="py-6 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
                       <div className="relative">
                         <input
-                          id="bookmarkName"
+                          id="name"
                           type="text"
-                          {...register("bookmarkName", {
+                          {...register("name", {
                             minLength: {
                               value: 1,
                               message:
-                                "Bookmark name length must be at least 1 character",
+                                "Collection name length must be at least 1 character",
                             },
                             required: {
                               value: true,
-                              message: "Bookmark name is required",
+                              message: "Collection name is required",
                             },
                           })}
-                          placeholder="Enter Bookmark name"
+                          placeholder="Enter Collection name"
                           className={`peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600 ${
-                            errors.bookmarkName
+                            errors.name
                               ? "border-red-500"
                               : "border-[#c3cad9]"
                           }`}
                         />
-                        {errors.bookmarkName?.message && (
+                        {errors.name?.message && (
                           <p className="text-red-500 text-xs mt-1">
-                            {errors.bookmarkName?.message}
+                            {errors.name?.message}
                           </p>
                         )}
                         <label
-                          htmlFor="bookmarkName"
-                          className="absolute left-0 -top-3.5 text-gray-600 text-sm "
+                          htmlFor="name"
+                          className="absolute left-0 -top-3.5 text-black-600 font-bold text-xl"
                         >
-                          Bookmark Name
+                          Collection Name
                         </label>
                       </div>
                       <div className="relative">
                         <input
-                          id="link"
+                          id="description"
                           type="text"
-                          {...register("link", {
+                          {...register("description", {
                             minLength: {
-                              value: 10,
+                              value: 1,
                               message:
-                                "Bookmark link length must be at least 10 character",
+                                "Description name length must be at least 1 character",
                             },
                             required: {
                               value: true,
-                              message: "Bookmark link is required",
+                              message: "Description is required",
                             },
                           })}
-                          placeholder="Enter Bookmark link"
+                          placeholder="Enter description"
                           className={`peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600 ${
-                            errors.link ? "border-red-500" : "border-[#c3cad9]"
-                          }`}
-                        />
-                        {errors.link?.message && (
-                          <p className="text-red-500 text-xs mt-1">
-                            {errors.link?.message}
-                          </p>
-                        )}
-                        <label
-                          htmlFor="link"
-                          className="absolute left-0 -top-3.5 text-gray-600 text-sm "
-                        >
-                          Link
-                        </label>
-                      </div>
-                      <div className="relative mx-auto">
-                        <select
-                          id="category"
-                          name="category"
-                          
-                          
-                          {...register("category", {
-                            required: {
-                              value: true,
-                              message: "Bookmark category is required",
-                            },
-                          })}
-                          className={`peer placeholder-transparent h-10 text-sm w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600 ${
-                            errors.bookmarkType
+                            errors.description
                               ? "border-red-500"
                               : "border-[#c3cad9]"
                           }`}
-                        >
-                          
-                          {data?.map((item, index) => (
-                            <option key={index} value={item.name}>
-                              {item.name}
-                            </option>
-                          ))}
-                          
-                        </select>
-                        {errors.category?.message && (
+                        />
+                        {errors.description?.message && (
                           <p className="text-red-500 text-xs mt-1">
-                            {errors.category?.message}
+                            {errors.description?.message}
                           </p>
                         )}
                         <label
-                          htmlFor="category"
-                          className="absolute left-0 -top-3.5 text-gray-600 text-sm "
+                          htmlFor="description"
+                          className="absolute left-0 -top-3.5 text-black-600 font-bold text-xl "
                         >
-                          Category
+                        Description
                         </label>
                       </div>
                       <div className="relative">
                         <select
-                          id="bookmarkType"
-                          name="bookmarkType"
-                          {...register("bookmarkType", {
+                          id="collectionType"
+                          name="collectionType"
+                          {...register("collectionType", {
                             required: {
                               value: true,
-                              message: "Bookmark type is required",
+                              message: "CollectionType is required",
                             },
                           })}
-                          className={`peer placeholder-transparent text-sm h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600 ${
-                            errors.bookmarkType
+                          className={`peer placeholder-transparent text-xl h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600 ${
+                            errors.collectionType
                               ? "border-red-500"
                               : "border-[#c3cad9]"
                           }`}
                         >
-                          <option value="Public">Public</option>
-                          <option value="Private">Private</option>
+                          <option value="Public" className="text-xm">Public</option>
+                          <option value="Private" className="text-xm">Private</option>
                         </select>
-                        {errors.bookmarkType?.message && (
+                        {errors.collectionType?.message && (
                           <p className="text-red-500 text-xs mt-1">
-                            {errors.bookmarkType?.message}
+                            {errors.collectionType?.message}
                           </p>
                         )}
                         <label
-                          htmlFor="bookmarkType"
-                          className="absolute left-0 -top-3.5 text-gray-600 text-sm "
+                          htmlFor="collectionType"
+                          className="absolute left-0 -top-3.5 text-black-600 font-bold text-xl "
                         >
-                          Bookmark Type
+                          Collection Type
                         </label>
                       </div>
                       <div className="relative">

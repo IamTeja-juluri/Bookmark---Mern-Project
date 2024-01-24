@@ -18,6 +18,10 @@ const  collectionSchema = mongoose.Schema({
         required : true,
         default : 'public'
     },
+    image : {
+        type : Object,
+        default : {}
+    },
     authorName : {
         type : String ,
         default : 'User'

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useGetCategoriesQuery } from '../../services/jsonServerApi';
+import { useGetCollectionsQuery } from '../../services/jsonServerApi';
 
 const SuggestedBookmarks = ({ className, header, posts = [], category }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-  const { isLoading, isError, isSuccess, data, error } = useGetCategoriesQuery();
+  const { isLoading, isError, isSuccess, data, error } = useGetCollectionsQuery();
   const imgUrl = data?.filter((item) => item.name === category);
   
   const indexOfLastItem = currentPage * itemsPerPage;
