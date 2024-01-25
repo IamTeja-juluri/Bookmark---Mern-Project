@@ -21,7 +21,7 @@ const Header = () => {
   };
 
   return (
-    <section className="bg-sky-100 sticky top-0 left-0 right-0 z-50 shadow-[0_10px_50px_rgba(8,_112,_184,_0.7)]">
+    <section className="bg-dark-hard sticky top-0 left-0 right-0 z-50 shadow-[0_10px_50px_rgba(8,_112,_184,_0.7)]">
       <header className="container mx-auto flex justify-between py-3 items-center">
         <div className="flex items-center">
           <img

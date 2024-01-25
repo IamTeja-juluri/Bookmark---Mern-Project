@@ -5,17 +5,16 @@ import { Link } from 'react-router-dom';
 
 const ArticleCard = ({ className, collection }) => {
   return (
-    
     <div
-      className={`rounded-xl overflow-hidden bg-slate-800 shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] ${className}`}
+      className={`rounded-xl overflow-hidden bg-dark-hard shadow-[0_10px_50px_rgba(8,_112,_184,_0.7)] ${className}`}
     >
-      <Link to='/bookmarks'>
+      <Link to='/bookmarks'> 
       <img
         src={collection.image?.filePath || images.Cta}
         alt="title"
         className="w-full object-cover object-center h-auto md:h-52 lg:h-48 xl:h-60"
       />
-      <div className="p-5 bg-slate-800">
+      <div className="p-5 bg-dark-hard shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
         <h2 className="font-roboto  font-bold text-xl text-white md:text-xl lg:text-2xl">
          {collection.name}
         </h2>

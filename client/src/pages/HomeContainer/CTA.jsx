@@ -21,7 +21,7 @@ const CTA = () => {
         />
       </svg>
 
-      <section className="relative bg-dark-hard px-5">
+      <section className="relative bg-dark-hard px-5 shadow-[0_10px_50px_rgba(8,_112,_184,_0.7)]">
         <div className="container grid grid-cols-12 mx-auto py-10 md:pb-20 lg:place-items-center">
           <div className="col-span-12 lg:col-span-6">
             <h2 className="text-white font-roboto font-bold text-2xl md:text-4xl md:text-center md:leading-normal lg:text-left">

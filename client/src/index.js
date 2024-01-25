@@ -14,7 +14,7 @@ root.render(
   <BrowserRouter>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <App/>
       </QueryClientProvider>
     </Provider>
   </BrowserRouter>

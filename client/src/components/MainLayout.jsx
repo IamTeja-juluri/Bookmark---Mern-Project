@@ -4,7 +4,7 @@ import Footer from './Footer'
 
 const MainLayout = ({ children }) => {
   return (
-    <div>
+    <div className="bg-dark-hard">
      <Header />
      { children }
      <Footer />
