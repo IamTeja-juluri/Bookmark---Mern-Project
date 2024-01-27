@@ -108,29 +108,22 @@ export const forgotPassword = async ({ email }) => {
 };
 
 
-export const addBookmark = async ({ name,collectionType,description, token }) => {
+export const addBookmark = async ({ data, token }) => {
   try {
-
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // };
-
-    const data = await axios.post('http://localhost:5000/api/v1/collection/new', {
-      name,
-      collectionType,
-      description,
-    }, {
+    const config = {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      }
-    });
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
+    const response = await axios.post(
+      "http://localhost:5000/api/v1/collection/new",
+      data,
+      config
+    );
 
-    return data;
+    return response.data;
   } catch (error) {
     if (error.response && error.response.data.message)
       throw new Error(error.response.data.message);

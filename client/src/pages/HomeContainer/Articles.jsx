@@ -13,8 +13,11 @@ const Articles = () => {
   };
 
   useEffect(() => {
+    
     // Reset visible articles to 6 when data changes
-    setVisibleArticles(6);
+     setVisibleArticles(6);
+  
+    
   }, [data]);
 
   return (

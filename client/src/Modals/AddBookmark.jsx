@@ -1,25 +1,29 @@
+
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useParams } from 'react-router';
 import toast from "react-hot-toast";
 
 import { IoClose } from "react-icons/io5";
 import { addBookmark } from "../services/index/users";
-import { useGetCollectionsQuery } from "../services/jsonServerApi";
+import { useGetCollectionsQuery, useAddLinksMutation } from "../services/jsonServerApi";
 
 const AddBookmark = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
+  const {collection} = useParams();
   const userState = useSelector((state) => state.user);
   const { isError, isSuccess, data, error } = useGetCollectionsQuery();
 
-  
+
+  const [addLinks] = useAddLinksMutation();
   
   const { mutate, isLoading } = useMutation({
-    mutationFn: ({ name,description,collectionType }) => {
+    mutationFn: ({ name,link }) => {
       
-      return addBookmark({ name,description,collectionType, token: userState.userInfo.accessToken });
+      return addBookmark({ name,link, token: userState.userInfo.accessToken });
     },
     onSuccess: (data) => {
       console.log(data);
@@ -38,8 +42,7 @@ const AddBookmark = ({ isOpen, onClose }) => {
   } = useForm({
     defaultValues: {
       name: "",
-      description:"",
-      collectionType: ""
+      link:""
     },
     mode: "onChange",
   });
@@ -52,8 +55,16 @@ const AddBookmark = ({ isOpen, onClose }) => {
   // }, [navigate, userState.userInfo]);
 
   const submitHandler = (data) => {
-    const { name,description,collectionType } = data;
-    mutate({ name,description,collectionType });
+    const { linkName,link } = data;
+
+    addLinks({ linkName,link,collection})
+    .unwrap()
+      .then(() => {
+        toast.success("Link added successfully!");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   // if(!userState.userInfo){
@@ -79,110 +90,80 @@ const AddBookmark = ({ isOpen, onClose }) => {
             <div className="relative px-24 py-4 bg-white shadow-lg sm:rounded-3xl sm:py-16">
               <div className="max-w-md mx-auto">
                 <div>
-                  <h1 className="text-3xl text-blue-400 font-semibold">Create Collection</h1>
+                  <h1 className="text-3xl text-blue-400 font-semibold">Add Bookmark</h1>
                 </div>
                 <form autoComplete="off" onSubmit={handleSubmit(submitHandler)}>
                   <div className="divide-y divide-gray-200">
                     <div className="py-6 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
                       <div className="relative">
                         <input
-                          id="name"
+                          id="linkName"
                           type="text"
-                          {...register("name", {
+                          {...register("linkName", {
                             minLength: {
                               value: 1,
                               message:
-                                "Collection name length must be at least 1 character",
+                                "link name length must be at least 1 character",
                             },
                             required: {
                               value: true,
-                              message: "Collection name is required",
+                              message: "link name is required",
                             },
                           })}
-                          placeholder="Enter Collection name"
-                          className={`peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600 ${
-                            errors.name
+                          placeholder="Enter link name"
+                          className={`peer text-base placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600 ${
+                            errors.linkName
                               ? "border-red-500"
                               : "border-[#c3cad9]"
                           }`}
                         />
-                        {errors.name?.message && (
+                        {errors.linkName?.message && (
                           <p className="text-red-500 text-xs mt-1">
-                            {errors.name?.message}
+                            {errors.linkName?.message}
                           </p>
                         )}
                         <label
-                          htmlFor="name"
-                          className="absolute left-0 -top-3.5 text-black-600 font-bold text-xl"
+                          htmlFor="linkName"
+                          className="absolute left-0 -top-3.5 text-black-600 font-bold text-base"
                         >
-                          Collection Name
+                          Name
                         </label>
                       </div>
                       <div className="relative">
                         <input
-                          id="description"
+                          id="link"
                           type="text"
-                          {...register("description", {
+                          {...register("link", {
                             minLength: {
-                              value: 1,
+                              value: 10,
                               message:
-                                "Description name length must be at least 1 character",
+                                "link length must be at least 1 character",
                             },
                             required: {
                               value: true,
-                              message: "Description is required",
+                              message: "link is required",
                             },
                           })}
-                          placeholder="Enter description"
-                          className={`peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600 ${
-                            errors.description
+                          placeholder="Enter link"
+                          className={`peer placeholder-transparent text-base h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600 ${
+                            errors.link
                               ? "border-red-500"
                               : "border-[#c3cad9]"
                           }`}
                         />
-                        {errors.description?.message && (
+                        {errors.link?.message && (
                           <p className="text-red-500 text-xs mt-1">
-                            {errors.description?.message}
+                            {errors.link?.message}
                           </p>
                         )}
                         <label
-                          htmlFor="description"
-                          className="absolute left-0 -top-3.5 text-black-600 font-bold text-xl "
+                          htmlFor="link"
+                          className="absolute left-0 -top-3.5 text-black-600 font-bold text-base"
                         >
-                        Description
+                        Link
                         </label>
                       </div>
-                      <div className="relative">
-                        <select
-                          id="collectionType"
-                          name="collectionType"
-                          {...register("collectionType", {
-                            required: {
-                              value: true,
-                              message: "CollectionType is required",
-                            },
-                          })}
-                          className={`peer placeholder-transparent text-xl h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600 ${
-                            errors.collectionType
-                              ? "border-red-500"
-                              : "border-[#c3cad9]"
-                          }`}
-                        >
-                          <option value="Public" className="text-xm">Public</option>
-                          <option value="Private" className="text-xm">Private</option>
-                        </select>
-                        {errors.collectionType?.message && (
-                          <p className="text-red-500 text-xs mt-1">
-                            {errors.collectionType?.message}
-                          </p>
-                        )}
-                        <label
-                          htmlFor="collectionType"
-                          className="absolute left-0 -top-3.5 text-black-600 font-bold text-xl "
-                        >
-                          Collection Type
-                        </label>
-                      </div>
+                     
                       <div className="relative">
                         <button
                           type="submit"

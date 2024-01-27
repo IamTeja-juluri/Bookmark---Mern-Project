@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
-        <Route path="/bookmark" element={<Bookmarks />} />
+        <Route path="/:collection/bookmarks" element={<Bookmarks />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<ProfilePage />} />

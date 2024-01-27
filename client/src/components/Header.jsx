@@ -4,18 +4,24 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 
 import { images } from "../constants";
 import { logout } from "../store/actions/user";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AddBookmark from "../Modals/AddBookmark";
-
+import AddCollection from "../Modals/AddCollection";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
 
   const userState = useSelector((state) => state.user);
   const [profileDrowpdown, setProfileDrowpdown] = useState(false);
   const [addBookmarkModal, setAddBookmarkModal] = useState(false);
+  const [addCollectionModal, setAddCollectionModal] = useState(false);
 
+  
+  const isBookmarksPage = location.pathname.includes("/bookmarks");
+  
   const logoutHandler = () => {
     dispatch(logout());
   };
@@ -34,12 +40,21 @@ const Header = () => {
         </div>
         <div className="flex items-center">
         <div className="px-5">
-        <button
-            className="flex items-center border-2 border-blue-500 px-6 py-2 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300"
-            onClick={() => setAddBookmarkModal(true)}
-          >
-            <span>Add Collection</span>
-          </button>
+        {isBookmarksPage ? (
+              <button
+                className="flex items-center border-2 border-blue-500 px-6 py-2 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300"
+                onClick={() => setAddBookmarkModal(true)}
+              >
+                <span>Add Link</span>
+              </button>
+            ) : (
+              <button
+                className="flex items-center border-2 border-blue-500 px-6 py-2 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300"
+                onClick={() => setAddCollectionModal(true)}
+              >
+                <span>Add Collection</span>
+              </button>
+            )}
         </div>
         
         
@@ -59,18 +74,25 @@ const Header = () => {
                       profileDrowpdown ? "block" : "hidden"
                     } hidden transition-all duration-500 pt-4 absolute bottom-0 right-0 transform translate-y-full group-hover:block w-max`}
                   >
-                    <ul className="bg-dark-soft bg-transparent text-center flex flex-col shadow-lg rounded-lg overflow-hidden">
+                    <ul className="bg-dark-soft lg:bg-transparent text-center flex flex-col shadow-lg rounded-lg overflow-hidden">
                       <button
                         onClick={() => navigate("/profile")}
                         type="button"
-                        className="hover:bg-dark-hard hover:text-white px-4 py-2 text-dark-soft"
+                        className="hover:bg-dark-hard hover:text-white px-4 py-2 text-slate-300"
                       >
                         Profile Page
                       </button>
                       <button
+                        onClick={() => navigate("/change-password")}
+                        type="button"
+                        className="hover:bg-dark-hard hover:text-white px-4 py-2 text-slate-300"
+                      >
+                        Change Password 
+                      </button>
+                      <button
                         onClick={logoutHandler}
                         type="button"
-                        className="hover:bg-dark-hard hover:text-white px-4 py-2 text-dark-soft"
+                        className="hover:bg-dark-hard hover:text-white px-4 py-2 text-slate-300"
                       >
                         Logout
                       </button>
@@ -90,7 +112,11 @@ const Header = () => {
         
         </div>
       </header>
-       <AddBookmark isOpen={addBookmarkModal} onClose={() => setAddBookmarkModal(false)} />
+      {isBookmarksPage ? (
+        <AddBookmark isOpen={addBookmarkModal} onClose={() => setAddBookmarkModal(false)} />
+      ) : (
+        <AddCollection isOpen={addCollectionModal} onClose={() => setAddCollectionModal(false)} />
+      )}
       
     </section>
   );

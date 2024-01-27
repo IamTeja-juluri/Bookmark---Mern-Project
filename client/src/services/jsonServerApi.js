@@ -20,14 +20,33 @@ export const jsonServerApi = createApi({
       providesTags: ["Posts"]
     }),
 
-    getBookmarks: builder.query({
-        query: (category) => `category/bookmark/find?category=${category}`,
+    updateCollections: builder.mutation({
+      query: (payload) => ({
+          url: "collection/new",
+          method: "POST",
+          body: payload
+       }),
+       invalidatesTags: ["Posts"]
     }),
 
-    getLatestBookmarks: builder.query({
-      query: (category) => `category/bookmark/latest?category=${category}`,
-    })
+    getLinks: builder.query({
+      query: (collection) => `collection/links?collectionName=${collection}`,
+      providesTags: ["Links"]
+    }),
+
+    AddLinks: builder.mutation({
+      query: (payload) => ({
+          url: `collection/links/new?name=${payload.collection}`,
+          method: "POST",
+          body: {linkName: payload.linkName, link: payload.link}
+       }),
+       invalidatesTags: ["Links"]
+    }),
+    
+  
+
+  
   }),
 });
 
-export const { useGetCollectionsQuery, useGetBookmarksQuery, useGetLatestBookmarksQuery } = jsonServerApi;
+export const { useGetCollectionsQuery, useUpdateCollectionsMutation, useAddLinksMutation, useGetLinksQuery} = jsonServerApi;
