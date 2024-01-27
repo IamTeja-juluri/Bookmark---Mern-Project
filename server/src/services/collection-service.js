@@ -22,6 +22,15 @@ async function getAllCollections(data){
     }
 }
 
+async function getCollectionDetails(query){
+    try{
+        const collectionDetails = await collectionRepository.getOne(query);
+        return collectionDetails;
+    }catch(error){
+        throw new AppError('Cannot find a new collection Object',StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
 async function searchCollections(data){
     try{
         const collectionResults = await collectionRepository.searchCollections(data);
@@ -32,5 +41,5 @@ async function searchCollections(data){
 }
 
 module.exports={
-    createCollection,getAllCollections,searchCollections
+    createCollection,getAllCollections,searchCollections,getCollectionDetails
 }
