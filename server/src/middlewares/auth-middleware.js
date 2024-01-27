@@ -7,7 +7,6 @@ const {ServerConfig} = require("../config")
 
 const protect = async(req,res,next)=>{
    try{
-        console.log("hi from protect",req.headers)
         const token = req.headers.authorization.split(' ');
         if(!token)
             throw new AppError("Unauthorised,please login",StatusCodes.UNAUTHORIZED)

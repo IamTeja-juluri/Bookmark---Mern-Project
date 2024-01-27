@@ -1,6 +1,6 @@
 module.exports={
     User : require("./user"),
-    BookMark : require("./bookMark"),
+    Link : require("./link"),
     Category : require("./category"),
     Collection : require("./collection"),
     Token : require("./token")

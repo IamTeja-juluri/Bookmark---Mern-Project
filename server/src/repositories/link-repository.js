@@ -1,15 +1,15 @@
 const CrudRepository  = require('./crud-repository')
-const { BookMark } = require("../models")
+const { Link } = require("../models")
 
-class bookMarkRepository extends CrudRepository{
+class linkRepository extends CrudRepository{
 
     constructor(){
-        super(BookMark)
+        super(Link)
     }
 
-   async getLatestBookmarks(query){
+   async getLatestLinks(query){
     // Sort in descending order based on the timestamp
-      const latestRecords = await BookMark.find(query)
+      const latestRecords = await Link.find(query)
                                                 .sort({createdAt:-1})
                                                 .limit(5)
       return latestRecords;
@@ -17,4 +17,4 @@ class bookMarkRepository extends CrudRepository{
 
 }
 
-module.exports=bookMarkRepository
+module.exports=linkRepository

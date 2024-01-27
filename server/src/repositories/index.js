@@ -1,6 +1,6 @@
 module.exports={
   CategoryRepository:require("./category-repository"),
-  BookMarkRepository:require("./bookMark-repository"),
+  LinkRepository:require("./link-repository"),
   UserRepository:require("./user-repository"),
   CollectionRepository:require("./collection-repository")
 }

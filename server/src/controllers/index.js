@@ -1,7 +1,7 @@
 module.exports={
   InfoController:require("./info-controller"),
   CategoryController:require("./category-controller"),
-  BookMarkController:require("./bookMark-controller"),
+  LinkController:require("./link-controller"),
   UserController:require("./user-controller"),
   CollectionController:require("./collection-controller")
 }
