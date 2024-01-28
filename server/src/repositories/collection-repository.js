@@ -21,7 +21,7 @@ class collectionRepository extends CrudRepository{
             console.log("else")
             query={collectionType:'public'}
         }
-        const results = await Collection.find(query);
+        const results = await Collection.find(query).sort({ createdAt: -1 });;
         return results;
     }
     
