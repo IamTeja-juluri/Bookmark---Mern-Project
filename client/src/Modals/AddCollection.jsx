@@ -16,25 +16,10 @@ const AddCollection = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const userState = useSelector((state) => state.user);
-  const { isError, isSuccess, data, error } = useGetCollectionsQuery();
+  // const { isError, isSuccess, data, error } = useGetCollectionsQuery();
 
   const [updateCollections] = useUpdateCollectionsMutation();
 
-  const { mutate, isLoading } = useMutation({
-    mutationFn: (formData) => {
-      return addBookmark({
-        data: formData,
-        token: userState.userInfo.accessToken,
-      });
-    },
-    onSuccess: (data) => {
-      toast.success("Collection added successfully!");
-      queryClient.invalidateQueries("collections");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
 
   const {
     register,
@@ -50,12 +35,7 @@ const AddCollection = ({ isOpen, onClose }) => {
     mode: "onChange",
   });
 
-  // useEffect(() => {
 
-  //   if (!userState.userInfo) {
-  //     navigate("/login");
-  //   }
-  // }, [navigate, userState.userInfo]);
 
   const submitHandler = (data) => {
     const { name, description, collectionType, image } = data;
@@ -64,20 +44,19 @@ const AddCollection = ({ isOpen, onClose }) => {
     formData.append("description", description);
     formData.append("collectionType", collectionType);
     formData.append("image", image[0]); // Assuming you only allow a single file
-    // mutate(formData);
+    
     updateCollections(formData)
       .unwrap()
       .then(() => {
         toast.success("Collection added successfully!");
       })
       .catch((error) => {
-        toast.error(error.message);
+        console.log(error);
+        toast.error(error.data.message);
       });
   };
 
-  // if(!userState.userInfo){
-  //   return <></>
-  // }
+ 
   return (
     <>
       <div
@@ -232,7 +211,7 @@ const AddCollection = ({ isOpen, onClose }) => {
                       <div className="relative">
                         <button
                           type="submit"
-                          disabled={!isValid || isLoading}
+                          disabled={!isValid }
                           onClick={onClose}
                           className="flex bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 focus:outline-none text-white text-lg uppercase font-bold shadow-md rounded-full px-5 py-2"
                         >

@@ -7,6 +7,7 @@ import SuggestedBookmarks from "./SuggestedBookmarks";
 import { useParams } from "react-router";
 import { useLocation } from "react-router-dom";
 import { useGetLinksQuery } from "../../services/jsonServerApi";
+import toast from "react-hot-toast";
 
 const postsData = [
   {
@@ -42,11 +43,22 @@ const Bookmarks = () => {
 
   const { isLoading, isError, isSuccess, data, error } = useGetLinksQuery(collection);
   
+// useEffect(() => {
+//   if(isError){
+//         toast.error(error.data.message);
+//       }
+// }, [data])
 
   const breadCrumbsData = [
     { name: "Home", link: "/" },
     { name: "LinksPage", link: `${location.pathname}` },
   ];
+
+  useEffect(() => {
+    if(isError){
+      toast.error(error.data.message);
+    }
+  }, [data])
 
 
 

@@ -3,13 +3,14 @@ import axios from "axios";
 
 export const signup = async ({ name, email, password, confirmPassword, phone }) => {
   try {
-    const { data } = await axios.post("http://localhost:5000/api/v1/user/register", {
+    const {data} = await axios.post("http://localhost:5000/api/v1/user/register", {
       name,
       email,
       password,
       confirmPassword,
       phone
     });
+   
     return data;
   } catch (error) {
     if (error.response && error.response.data.message)
@@ -107,26 +108,3 @@ export const forgotPassword = async ({ email }) => {
   }
 };
 
-
-export const addBookmark = async ({ data, token }) => {
-  try {
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    const response = await axios.post(
-      "http://localhost:5000/api/v1/collection/new",
-      data,
-      config
-    );
-
-    return response.data;
-  } catch (error) {
-    if (error.response && error.response.data.message)
-      throw new Error(error.response.data.message);
-    throw new Error(error.message);
-  }
-};

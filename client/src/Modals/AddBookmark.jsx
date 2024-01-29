@@ -8,32 +8,19 @@ import { useParams } from 'react-router';
 import toast from "react-hot-toast";
 
 import { IoClose } from "react-icons/io5";
-import { addBookmark } from "../services/index/users";
+
 import { useGetCollectionsQuery, useAddLinksMutation } from "../services/jsonServerApi";
 
 const AddBookmark = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const {collection} = useParams();
   const userState = useSelector((state) => state.user);
-  const { isError, isSuccess, data, error } = useGetCollectionsQuery();
+  // const { isError, isSuccess, data, error } = useGetCollectionsQuery();
 
 
   const [addLinks] = useAddLinksMutation();
   
-  const { mutate, isLoading } = useMutation({
-    mutationFn: ({ name,link }) => {
-      
-      return addBookmark({ name,link, token: userState.userInfo.accessToken });
-    },
-    onSuccess: (data) => {
-      console.log(data);
-      toast.success("Bookmark added successfully!");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-      console.log(error);
-    },
-  });
+
 
   const {
     register,
@@ -47,12 +34,7 @@ const AddBookmark = ({ isOpen, onClose }) => {
     mode: "onChange",
   });
 
-  // useEffect(() => {
-    
-  //   if (!userState.userInfo) {
-  //     navigate("/login");
-  //   }
-  // }, [navigate, userState.userInfo]);
+
 
   const submitHandler = (data) => {
     const { linkName,link } = data;
@@ -67,9 +49,7 @@ const AddBookmark = ({ isOpen, onClose }) => {
       });
   };
 
-  // if(!userState.userInfo){
-  //   return <></>
-  // }
+  
   return (
 
     <>
@@ -167,7 +147,7 @@ const AddBookmark = ({ isOpen, onClose }) => {
                       <div className="relative">
                         <button
                           type="submit"
-                          disabled={!isValid || isLoading}
+                          disabled={!isValid }
                           onClick={onClose}
                           className="flex bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 focus:outline-none text-white text-lg uppercase font-bold shadow-md rounded-full px-5 py-2"
                         >
