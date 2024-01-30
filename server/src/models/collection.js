@@ -16,7 +16,7 @@ const  collectionSchema = mongoose.Schema({
     collectionType : {
         type : String,
         required : true,
-        default : 'public'
+        default : 'Public'
     },
     image : {
         type : Object,

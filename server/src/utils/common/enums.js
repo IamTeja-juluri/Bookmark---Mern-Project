@@ -5,8 +5,8 @@ const BoxSize={
 }
 
 const BookmarkType = {
-    PUBLIC : "public",
-    PRIVATE : "private"
+    PUBLIC : "Public",
+    PRIVATE : "Private"
 }
 
 const BookmarkCategories = {
