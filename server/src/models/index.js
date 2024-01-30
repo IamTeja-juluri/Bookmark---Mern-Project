@@ -2,5 +2,6 @@ module.exports={
     User : require("./user"),
     Link : require("./link"),
     Collection : require("./collection"),
-    Token : require("./token")
+    Token : require("./token"),
+    Like : require("./likes")
 }
