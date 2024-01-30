@@ -14,8 +14,8 @@ const protect = async(req,res,next)=>{
         const user = await User.findOne({_id:decoded.id}).select("-password")
         if(!user)
             throw new AppError("User Not found",StatusCodes.UNAUTHORIZED)
-        req.user = user
-        req.user.accessToken=token[1]
+        req.user=user
+        req.user.token=token[1]
         next()
     }catch(error){
         ErrorResponse.error="JsonWebTokenError"

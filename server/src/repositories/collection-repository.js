@@ -1,9 +1,10 @@
 const CrudRepository  = require('./crud-repository')
-const ObjectId = require('mongodb').ObjectId;
-const { Collection,User } = require("../models")
-const jwt = require("jsonwebtoken")
-const {ServerConfig} = require("../config")
-
+const ObjectId = require('mongodb').ObjectId
+const { Collection } = require("../models")
+const UserRepository  = require('./user-repository')
+const AppError = require('../utils/errors/app-error')
+const { StatusCodes } = require('http-status-codes')
+const userRepository = new UserRepository()
 
 class collectionRepository extends CrudRepository{
 
@@ -12,25 +13,16 @@ class collectionRepository extends CrudRepository{
     }
 
     async getCollections(data){
-        const user = data.user
         let query
-        var userObjectId
-        if(user){
-           userObjectId = new ObjectId(user._id)
-           query = {$or:[{userId:userObjectId},{collectionType:'Public'}]}
-        }
-        else if(!user && data.headers?.authorization){
+        if(data.headers?.authorization){
             const token=data.headers.authorization.split(' ')[1]
             if(!token)
                 throw new AppError("Unauthorised,please login",StatusCodes.UNAUTHORIZED)
-            const decoded = jwt.verify(token,ServerConfig.JWT_SECRET)
-            const user = await User.findOne({_id:decoded.id}).select("-password")
+            const user = await userRepository.getUserDetailsFromToken(token)
             if(!user)
                 throw new AppError("User Not found",StatusCodes.UNAUTHORIZED)
-            userObjectId = new ObjectId(user._id)
+            const  userObjectId = new ObjectId(user._id)
             query = {$or:[{userId:userObjectId},{collectionType:'Public'}]} 
-            data.user = user
-            data.user.accessToken=token
         }
         else
             query={collectionType:'Public'}
@@ -45,7 +37,7 @@ class collectionRepository extends CrudRepository{
             query = {
                 "$and":{
                     "$or":[
-                        {collectionType:'public'},
+                        {collectionType:'Public'},
                         {userId:user._id}
                     ],
                     "$or": [

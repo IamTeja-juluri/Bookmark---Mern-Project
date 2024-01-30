@@ -6,13 +6,13 @@ const AppError = require('../utils/errors/app-error');
 
 async function createLink(req,res){
     try{
-        if(!req.user)
-            throw new AppError(`Please login to create a bookmark`,StatusCodes.BAD_REQUEST)
         const authorName=req.user.name
         const userId = req.user._id
         const collectionName = req.query.name
         const collection =  await Collection.findOne({name:collectionName})
         const collectionId = collection._id
+        if(collection.userId !== userId)
+            throw new AppError(`You cannot add links of other users collection`,StatusCodes.FORBIDDEN)
         const {link,linkName} = req.body       
         const collectionLink = await LinkService.createLink({userId,authorName,link,linkName,collectionId});
         SuccessResponse.data=collectionLink;
@@ -29,7 +29,6 @@ async function createLink(req,res){
 
 async function getCollectionLinks(req,res){
     try{
-        // const collection = await Collection.findOne({name:req.query.collectionName})
         const collection = await CollectionService.getCollectionDetails({name:req.query.collectionName})
         const links = await LinkService.getLinks({collectionId:collection._id})
         SuccessResponse.data = links

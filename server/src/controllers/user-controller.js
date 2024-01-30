@@ -49,6 +49,7 @@ async function createUser(req,res){
 
 }
 
+
 async function userInfo(req,res){
     try{
        const user = await User.findOne({_id:req.user._id}).select('-password -createdAt -updatedAt -__v -_id')
@@ -82,8 +83,9 @@ async function loginUser(req,res){
             sameSite: "None",
             secure: true
         });
+        req.user=user
+        req.user.token=token
         const sanitizedData = (({ password, ...rest }) => rest)(user._doc);
-        // Include the token in the response data
         sanitizedData.accessToken=token
         SuccessResponse.data=sanitizedData
         return res
@@ -101,7 +103,6 @@ async function loginStatus(req,res){
     const token = req.cookies.token;
     if(!token)
         return  res.json(false);
-    //verify the token and get user id from it
     const verified = jwt.verify(token,process.env.JWT_SECRET);
     if(verified)
         return  res.json(true);

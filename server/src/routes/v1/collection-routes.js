@@ -1,7 +1,6 @@
 const express= require('express');
 const { CollectionController } = require('../../controllers');
 const LinkRoutes = require("./links/link-routes");
-const { Collection } = require('../../models');
 const { CollectionMiddlewares,AuthMiddlewares,PaginatedResultsMiddlewares } = require('../../middlewares');
 const { upload } = require('../../utils/common/fileUpload');
 

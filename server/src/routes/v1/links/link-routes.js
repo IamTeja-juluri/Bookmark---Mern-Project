@@ -7,6 +7,6 @@ const { Link } = require("../../../models")
 router.post('/new',AuthMiddlewares.protect,LinkController.createLink)
 router.get('/find',PaginatedResultsMiddlewares.paginatedResults(Link),LinkController.getAnyLinksByQuery)
 router.get('/latest',LinkController.getLatestLinks)
-router.get('/',AuthMiddlewares.protect,LinkController.getCollectionLinks)
+router.get('/',LinkController.getCollectionLinks)
 router.patch('/',AuthMiddlewares.protect,LinkController.updateLink)
 module.exports=router;
