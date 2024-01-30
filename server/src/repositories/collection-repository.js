@@ -29,40 +29,6 @@ class collectionRepository extends CrudRepository{
         const results = await Collection.find(query).sort({ createdAt: -1 })
         return results;
     }
-    
-    async searchCollections(data){
-        const user = data.user
-        let query
-        if(user){
-            query = {
-                "$and":{
-                    "$or":[
-                        {collectionType:'Public'},
-                        {userId:user._id}
-                    ],
-                    "$or": [
-                        { name: { $regex: data.params.key, $options: 'i' } },
-                        { description: { $regex: data.params.key, $options: 'i' } }
-                    ]
-                }
-            }
-        }else{
-            query = {
-                "$and":[
-                    {collectionType:'Public'},
-                    {
-                        "$or": [
-                            { name: { $regex: data.params.key, $options: 'i' } },
-                            { description: { $regex: data.params.key, $options: 'i' } }
-                        ]
-                    }
-                ]
-            }
-        }
-        const results =await Collection.find(query);
-        return results;
-    }
-
 
 }
 

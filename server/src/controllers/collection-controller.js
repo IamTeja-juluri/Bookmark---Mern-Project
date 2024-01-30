@@ -57,20 +57,6 @@ async function getAllCollections(req,res){
     }
 }
 
-async function searchCollections(req,res){
-    try{
-        const collectionResults=await CollectionService.searchCollections(req);
-        return res
-                  .status(StatusCodes.OK)
-                  .json(collectionResults);
-    }catch(error){
-        ErrorResponse.error=error;
-        return res
-                  .status(error.statusCode)
-                  .json(ErrorResponse)
-    }
-}
-
 module.exports={
-    createCollection,getAllCollections,searchCollections
+    createCollection,getAllCollections
 }

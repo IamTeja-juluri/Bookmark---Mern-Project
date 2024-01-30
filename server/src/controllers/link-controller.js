@@ -11,8 +11,8 @@ async function createLink(req,res){
         const collectionName = req.query.name
         const collection =  await Collection.findOne({name:collectionName})
         const collectionId = collection._id
-        if(collection.userId !== userId)
-            throw new AppError(`You cannot add links of other users collection`,StatusCodes.FORBIDDEN)
+        if(collection.userId.toString() !== userId.toString())
+            throw new AppError(`You cannot add links to other users collection`,StatusCodes.FORBIDDEN)
         const {link,linkName} = req.body       
         const collectionLink = await LinkService.createLink({userId,authorName,link,linkName,collectionId});
         SuccessResponse.data=collectionLink;

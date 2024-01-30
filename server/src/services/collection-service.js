@@ -32,15 +32,7 @@ async function getCollectionDetails(query){
     }
 }
 
-async function searchCollections(data){
-    try{
-        const collectionResults = await collectionRepository.searchCollections(data);
-        return collectionResults;
-    }catch(error){
-        throw new AppError('Cannot search collection Objects',StatusCodes.INTERNAL_SERVER_ERROR);
-    }
-}
 
 module.exports={
-    createCollection,getAllCollections,searchCollections,getCollectionDetails
+    createCollection,getAllCollections,getCollectionDetails
 }
