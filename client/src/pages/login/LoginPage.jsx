@@ -8,28 +8,15 @@ import { useDispatch, useSelector } from "react-redux";
 import MainLayout from "../../components/MainLayout";
 import { login } from "../../services/index/users";
 import { userActions } from "../../store/reducers/userReducers";
+import { useLoginUserMutation } from "../../services/jsonServerApi";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
+  const [login] = useLoginUserMutation();
 
-  const { mutate, isLoading } = useMutation({
-    mutationFn: ({ email, password }) => {
-      return login({ email, password });
-    },
-    onSuccess: (data) => {
-      console.log(data);
 
-      dispatch(userActions.setUserInfo(data.data));
-      localStorage.setItem("account", JSON.stringify(data.data));
-     toast.success("Successfully Logged in!");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-      console.log(error);
-    },
-  });
 
   useEffect(() => {
     
@@ -52,7 +39,14 @@ const LoginPage = () => {
 
   const submitHandler = (data) => {
     const { email, password } = data;
-    mutate({ email, password });
+    login({ email, password })
+    .unwrap()
+    .then((data) => {
+      console.log(data);
+      dispatch(userActions.setUserInfo(data.data));
+      localStorage.setItem("account", JSON.stringify(data.data));
+    })
+    .catch((error) => toast.error(error.message))
   };
 
   return (
@@ -134,7 +128,7 @@ const LoginPage = () => {
             </Link>
             <button
               type="submit"
-              disabled={!isValid || isLoading}
+              disabled={!isValid }
               className="bg-primary text-white font-bold text-lg py-4 px-8 w-full rounded-lg my-6 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               Sign In

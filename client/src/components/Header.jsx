@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
@@ -7,22 +7,24 @@ import { logout } from "../store/actions/user";
 import { useLocation, useNavigate } from "react-router-dom";
 import AddBookmark from "../Modals/AddBookmark";
 import AddCollection from "../Modals/AddCollection";
+import { useLogoutUserQuery } from "../services/jsonServerApi";
+import toast from "react-hot-toast";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-
   const userState = useSelector((state) => state.user);
   const [profileDrowpdown, setProfileDrowpdown] = useState(false);
   const [addBookmarkModal, setAddBookmarkModal] = useState(false);
   const [addCollectionModal, setAddCollectionModal] = useState(false);
+  
 
-  
   const isBookmarksPage = location.pathname.includes("/bookmarks");
-  
+
   const logoutHandler = () => {
+    
     dispatch(logout());
   };
 
@@ -39,8 +41,8 @@ const Header = () => {
           {/* <h1 className='font-serif font-bold text-blue-500 text-xl'>Bookmark Hub</h1> */}
         </div>
         <div className="flex items-center">
-        <div className="px-5">
-        {isBookmarksPage ? (
+          <div className="px-5">
+            {isBookmarksPage ? (
               <button
                 className="flex items-center border-2 border-blue-500 px-6 py-2 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300"
                 onClick={() => setAddBookmarkModal(true)}
@@ -55,9 +57,8 @@ const Header = () => {
                 <span>Add Collection</span>
               </button>
             )}
-        </div>
-        
-        
+          </div>
+
           {userState.userInfo ? (
             <div className="text-white items-center gap-y-5 lg:text-dark-soft flex flex-col lg:flex-row gap-x-2 font-semibold">
               <div className="relative group">
@@ -87,7 +88,7 @@ const Header = () => {
                         type="button"
                         className="hover:bg-dark-hard hover:text-white px-4 py-2 text-slate-300"
                       >
-                        Change Password 
+                        Change Password
                       </button>
                       <button
                         onClick={logoutHandler}
@@ -109,15 +110,19 @@ const Header = () => {
               Sign in
             </button>
           )}
-        
         </div>
       </header>
       {isBookmarksPage ? (
-        <AddBookmark isOpen={addBookmarkModal} onClose={() => setAddBookmarkModal(false)} />
+        <AddBookmark
+          isOpen={addBookmarkModal}
+          onClose={() => setAddBookmarkModal(false)}
+        />
       ) : (
-        <AddCollection isOpen={addCollectionModal} onClose={() => setAddCollectionModal(false)} />
+        <AddCollection
+          isOpen={addCollectionModal}
+          onClose={() => setAddCollectionModal(false)}
+        />
       )}
-      
     </section>
   );
 };

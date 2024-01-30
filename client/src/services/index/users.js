@@ -34,6 +34,23 @@ export const login = async ({ email, password }) => {
   }
 };
 
+export const logout = async ({ token }) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(`http://localhost:5000/api/v1/user/logout`, config);
+    return data;
+  } catch (error) {
+    if (error.response && error.response.data.message)
+      throw new Error(error.response.data.message);
+    throw new Error(error.message);
+  }
+};
+
 export const getUserProfile = async ({ token }) => {
   try {
     const config = {

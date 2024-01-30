@@ -43,10 +43,23 @@ export const jsonServerApi = createApi({
        invalidatesTags: ["Links"]
     }),
     
+    logoutUser: builder.query({
+      query: () => `http://localhost:5000/api/v1/user/logout`,
+      invalidatesTags: ["Posts"]
+    }),
+
+    loginUser: builder.mutation({
+      query: (payload) => ({
+          url: `http://localhost:5000/api/v1/user/login`,
+          method: "POST",
+          body: payload
+       }),
+       invalidatesTags: ["Posts"]
+    }),
   
 
   
   }),
 });
 
-export const { useGetCollectionsQuery, useUpdateCollectionsMutation, useAddLinksMutation, useGetLinksQuery} = jsonServerApi;
+export const { useGetCollectionsQuery, useUpdateCollectionsMutation, useAddLinksMutation, useGetLinksQuery, useLogoutUserQuery, useLoginUserMutation} = jsonServerApi;
