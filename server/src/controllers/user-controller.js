@@ -41,7 +41,6 @@ async function createUser(req,res){
               .status(StatusCodes.CREATED)
               .json(SuccessResponse);
     }catch(error){
-        console.log(error)
         ErrorResponse.error=error;
         return res
               .status(error.statusCode)
@@ -52,7 +51,6 @@ async function createUser(req,res){
 
 async function userInfo(req,res){
     try{
-        console.log(req.user)
        const user = await User.findOne({_id:req.user._id}).select('-password -createdAt -updatedAt -__v -_id')
        SuccessResponse.data = user
        return res
@@ -81,7 +79,7 @@ async function loginUser(req,res){
             path:"/",
             httpOnly: true,
             expires: new Date(Date.now() + 1000*24*60*60),
-            sameSite: "none",
+            sameSite: "None",
             secure: true
         });
         const sanitizedData = (({ password, ...rest }) => rest)(user._doc);
@@ -195,7 +193,6 @@ async function changePassword(req,res){
         }else
             throw new AppError('Old password is incorrect',StatusCodes.BAD_REQUEST)
     }catch(error){
-        console.log(error)
         ErrorResponse.error = error;
         return res
                   .status(error.statusCode)

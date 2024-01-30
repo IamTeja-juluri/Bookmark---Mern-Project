@@ -31,7 +31,6 @@ async function getCollectionLinks(req,res){
     try{
         // const collection = await Collection.findOne({name:req.query.collectionName})
         const collection = await CollectionService.getCollectionDetails({name:req.query.collectionName})
-        console.log("collection=",collection)
         const links = await LinkService.getLinks({collectionId:collection._id})
         SuccessResponse.data = links
         return res

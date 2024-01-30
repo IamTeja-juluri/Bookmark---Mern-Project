@@ -1,5 +1,8 @@
 const CrudRepository  = require('./crud-repository')
-const { Collection } = require("../models")
+const { Collection,User } = require("../models")
+const jwt = require("jsonwebtoken")
+const {ServerConfig} = require("../config")
+
 
 class collectionRepository extends CrudRepository{
 
@@ -8,20 +11,30 @@ class collectionRepository extends CrudRepository{
     }
 
     async getCollections(data){
-        console.log(data.headers)
         const user = data.user
         let query
-        if(user)
+        if(user){
            query = { $or : [
                     {userId:user._id},
                     {collectionType:'public'}
                 ]
             };
-        else{
-            console.log("else")
-            query={collectionType:'public'}
         }
-        const results = await Collection.find(query).sort({ createdAt: -1 });;
+        else if(!user && data.headers?.authorization){
+            const token=data.headers.authorization.split(' ')[1]
+            if(!token)
+                throw new AppError("Unauthorised,please login",StatusCodes.UNAUTHORIZED)
+            const decoded = jwt.verify(token,ServerConfig.JWT_SECRET)
+            const user = await User.findOne({_id:decoded.id}).select("-password")
+            if(!user)
+                throw new AppError("User Not found",StatusCodes.UNAUTHORIZED)
+            query = {  $or : [ {userId:user._id}, {collectionType:'public'} ] } 
+            data.user = user
+            data.user.accessToken=token
+        }
+        else
+            query={collectionType:'public'}
+        const results = await Collection.find(query).sort({ createdAt: -1 })
         return results;
     }
     

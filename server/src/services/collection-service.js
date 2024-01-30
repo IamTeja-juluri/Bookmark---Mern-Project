@@ -18,6 +18,7 @@ async function getAllCollections(data){
         const allCollections = await collectionRepository.getCollections(data);
         return allCollections;
     }catch(error){
+        console.log("error=",error)
         throw new AppError('Cannot find a new collection Object',StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }

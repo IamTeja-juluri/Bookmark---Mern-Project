@@ -10,7 +10,7 @@ router.use(express.json());
 
 router.use('/links',LinkRoutes)
 router.post('/new',AuthMiddlewares.protect,upload.single("image"),CollectionMiddlewares.validateCreateCollection,CollectionController.createCollection)
-router.get('/',AuthMiddlewares.protect,PaginatedResultsMiddlewares.paginatedResults(Collection),CollectionController.getAllCollections)
+router.get('/',CollectionController.getAllCollections)
 router.get('/search/:key',CollectionController.searchCollections)
 
 module.exports=router

@@ -46,7 +46,6 @@ async function getAllCollections(req,res){
 
     try{
         const allCollections=await CollectionService.getAllCollections(req);
-        console.log(allCollections)
         return res
                   .status(StatusCodes.OK)
                   .json(allCollections);

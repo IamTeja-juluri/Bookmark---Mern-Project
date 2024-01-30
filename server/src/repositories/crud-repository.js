@@ -55,7 +55,6 @@ class CrudRepository{
                 id:id
             }
         });
-        console.log(response);
         return response;
     }
     

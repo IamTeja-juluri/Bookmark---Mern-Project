@@ -13,7 +13,6 @@ function paginatedResults(model,sortFilter){
             const { page: _, limit: __, ...newQuery } = req.query
             const results = {}
             const count = await model.countDocuments(newQuery)
-            console.log(count)
             if(startIndex>0){
                 results.previous = {
                     page : page -1,
