@@ -45,7 +45,7 @@ const AddBookmark = ({ isOpen, onClose }) => {
         toast.success("Link added successfully!");
       })
       .catch((error) => {
-        toast.error(error.data.message);
+        toast.error(error.data.error.explanation);
       });
   };
 
