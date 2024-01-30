@@ -54,12 +54,6 @@ const Bookmarks = () => {
     { name: "LinksPage", link: `${location.pathname}` },
   ];
 
-  useEffect(() => {
-    if(isError){
-      toast.error(error.data.message);
-    }
-  }, [data])
-
 
 
   return (

@@ -14,6 +14,7 @@ const ArticleCard = ({ className, collection }) => {
         alt="title"
         className="w-full object-cover object-center h-auto md:h-52 lg:h-48 xl:h-60"
       />
+      </Link>
       <div className="p-5 bg-dark-hard">
         <h2 className="font-roboto  font-bold text-xl text-white md:text-xl lg:text-2xl">
          {collection.name}
@@ -21,6 +22,7 @@ const ArticleCard = ({ className, collection }) => {
         <p className="text-slate-300 mt-3 text-sm">
          {collection.description}
         </p>
+        
         <div className="flex items-center">
         <button className="text-red-500 text-4xl">&#9829;</button>
         <p className="ml-1 mr-2 text-white">500</p>
@@ -29,7 +31,7 @@ const ArticleCard = ({ className, collection }) => {
         <p className="ml-auto text-white">Authored By : {collection.authorName}</p>
         </div>
         </div>
-      </Link>
+      
 
     </div>
   );

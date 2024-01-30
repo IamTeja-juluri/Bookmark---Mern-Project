@@ -19,12 +19,10 @@ const Header = () => {
   const [profileDrowpdown, setProfileDrowpdown] = useState(false);
   const [addBookmarkModal, setAddBookmarkModal] = useState(false);
   const [addCollectionModal, setAddCollectionModal] = useState(false);
-  
 
   const isBookmarksPage = location.pathname.includes("/bookmarks");
 
   const logoutHandler = () => {
-    
     dispatch(logout());
   };
 
@@ -42,17 +40,25 @@ const Header = () => {
         </div>
         <div className="flex items-center">
           <div className="px-5">
-            {isBookmarksPage ? (
+            {isBookmarksPage && userState.userInfo ? (
               <button
                 className="flex items-center border-2 border-blue-500 px-6 py-2 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300"
                 onClick={() => setAddBookmarkModal(true)}
               >
                 <span>Add Link</span>
               </button>
-            ) : (
+            ) : null}
+            {!isBookmarksPage && (
               <button
                 className="flex items-center border-2 border-blue-500 px-6 py-2 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300"
-                onClick={() => setAddCollectionModal(true)}
+                onClick={() => {
+                  if (!userState.userInfo) {
+                    navigate("/login ");
+                    toast.error("Please Login!");
+                  } else {
+                    setAddCollectionModal(true);
+                  }
+                }}
               >
                 <span>Add Collection</span>
               </button>
@@ -65,7 +71,9 @@ const Header = () => {
                 <div className="flex flex-col items-center">
                   <button
                     className="flex gap-x-1 items-center my-auto lg:mt-0 border-2 border-blue-500 px-6 py-2 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300"
-                    onClick={() => setProfileDrowpdown(!profileDrowpdown)}
+                    onClick={() => {
+                      setProfileDrowpdown(!profileDrowpdown);
+                    }}
                   >
                     <span>Account</span>
                     <MdKeyboardArrowDown />
