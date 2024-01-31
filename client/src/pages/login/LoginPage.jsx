@@ -42,7 +42,6 @@ const LoginPage = () => {
     login({ email, password })
     .unwrap()
     .then((data) => {
-      console.log(data);
       dispatch(userActions.setUserInfo(data.data));
       localStorage.setItem("account", JSON.stringify(data.data));
     })

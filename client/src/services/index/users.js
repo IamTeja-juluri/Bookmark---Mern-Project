@@ -60,6 +60,7 @@ export const getUserProfile = async ({ token }) => {
     };
 
     const { data } = await axios.get(`http://localhost:5000/api/v1/user/info`, config);
+    
     return data;
   } catch (error) {
     if (error.response && error.response.data.message)
@@ -90,7 +91,6 @@ export const updateProfile = async ({ token, userData }) => {
 };
 
 export const updateProfilePicture = async ({ token, formData }) => {
-  console.log(formData);
   try {
     const config = {
       headers: {

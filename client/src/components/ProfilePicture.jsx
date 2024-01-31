@@ -11,12 +11,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { userActions } from "../store/reducers/userReducers";
 
 const ProfilePicture = ({ avatar }) => {
+ 
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
     const userState = useSelector((state) => state.user);
     const [openCrop, setOpenCrop] = useState(false);
     const [photo, setPhoto] = useState(null);
-
+    
     const { mutate, isLoading } = useMutation({
         mutationFn: ({ token, formData }) => {
           return updateProfilePicture({
@@ -26,7 +27,7 @@ const ProfilePicture = ({ avatar }) => {
         },
         onSuccess: (data) => {
           dispatch(userActions.setUserInfo(data));
-          setOpenCrop(false);
+                    setOpenCrop(false);
           localStorage.setItem("account", JSON.stringify(data));
           queryClient.invalidateQueries(["profile"]);
           toast.success("Profile Photo is removed");
@@ -49,7 +50,7 @@ const ProfilePicture = ({ avatar }) => {
         const formData = new FormData();
         formData.append("profilePicture", undefined);
 
-        mutate({ token: userState.userInfo.id, formData: formData });
+        mutate({ token: userState.userInfo.accessToken, formData: formData });
       } catch (error) {
         toast.error(error.message);
         console.log(error);
@@ -70,7 +71,7 @@ const ProfilePicture = ({ avatar }) => {
         >
           {avatar ? (
             <img
-              src={stables.UPLOAD_FOLDER_BASE_URL + avatar}
+              src={avatar}
               alt="profile"
               className="w-full h-full object-cover"
             />

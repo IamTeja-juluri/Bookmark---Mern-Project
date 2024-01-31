@@ -16,18 +16,21 @@ const CropEasy = ({ photo, setOpenCrop }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setzoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-
+  
   const { mutate, isLoading } = useMutation({
+    
     mutationFn: ({ token, formData }) => {
+      
       return updateProfilePicture({
         token: userState.userInfo.accessToken,
         formData: formData,
       });
     },
     onSuccess: (data) => {
-      dispatch(userActions.setUserInfo(data));
-      setOpenCrop(false);
-      localStorage.setItem("account", JSON.stringify(data));
+      console.log(data);
+      //dispatch(userActions.setUserInfo(data));
+            setOpenCrop(false);
+      //localStorage.setItem("account", JSON.stringify(data));
       queryClient.invalidateQueries(["profile"]);
       toast.success("Profile Photo is updated");
     },
@@ -52,7 +55,7 @@ const CropEasy = ({ photo, setOpenCrop }) => {
       const formData = new FormData();
       formData.append("profilePicture", file);
 
-      mutate({ token: userState.userInfo.id, formData: formData });
+      mutate({ token: userState.userInfo.accessToken, formData: formData });
     } catch (error) {
       toast.error(error.message);
       console.log(error);
