@@ -1,19 +1,20 @@
-const mongoose=require('mongoose')
+const mongoose = require("mongoose");
 
-const likeSchema = mongoose.Schema({
+const likeSchema = mongoose.Schema(
+  {
     user: {
-     type: mongoose.Schema.Types.ObjectId,
-     ref: 'User'
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    collection : {
-      type : mongoose.Schema.Types.ObjectId,
-      ref : 'Collection'
+    collection: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Collection",
     },
-    likeCount : {
-        type : Number,
-        default : 0
-    }
-})
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const  Like = mongoose.model("Like",likeSchema)
-module.exports=Like
+const Like = mongoose.model("Like", likeSchema);
+module.exports = Like;

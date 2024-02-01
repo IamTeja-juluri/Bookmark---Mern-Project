@@ -1,6 +1,5 @@
 module.exports={
   LinkRepository:require('./link-repository'),
   UserRepository:require('./user-repository'),
-  CollectionRepository:require('./collection-repository'),
-  LikeRepository: require('./like-repository')
+  CollectionRepository:require('./collection-repository')
 }
