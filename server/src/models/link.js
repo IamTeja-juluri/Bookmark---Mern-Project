@@ -6,11 +6,13 @@ const linkSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: [true, "Please add userId"],
       trim: true,
+      ref: "User",
     },
     collectionId: {
       type: mongoose.Schema.Types.ObjectId,
       required: [true, "Please add collectionId"],
       trim: true,
+      ref: "Collection",
     },
     link: {
       type: String,

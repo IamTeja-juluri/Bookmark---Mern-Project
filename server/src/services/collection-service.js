@@ -32,7 +32,24 @@ async function getCollectionDetails(query){
     }
 }
 
+async function deleteCollection(data) {
+    try {
+      const link = await collectionRepository.deleteOne(data);
+      return link;
+    } catch (error) {
+      throw new AppError("Cannot delete this link", StatusCodes.BAD_REQUEST);
+    }
+  }
+
+  async function updateCollection(id, data) {
+    try {
+      const updatedCollection = await collectionRepository.UpdateOne(id, data);
+      return updatedCollection;
+    } catch (error) {
+      throw new AppError("Update failed", StatusCodes.NOT_FOUND);
+    }
+  }
 
 module.exports={
-    createCollection,getAllCollections,getCollectionDetails
+    createCollection,getAllCollections,getCollectionDetails,deleteCollection,updateCollection
 }

@@ -76,6 +76,7 @@ async function loginUser(req,res){
         if(!isPasswordCorrect)
             throw new AppError(`Wrong Password,Please try again`,StatusCodes.BAD_REQUEST);
         const token = generateToken(user._id);
+        await Token.create({userId:user._id,token:token,createdAt:new Date(Date.now()),expiresAt:new Date(Date.now() + 1000*24*60*60)})
         res.cookie("token",token,{
             path:"/",
             httpOnly: true,
@@ -111,6 +112,9 @@ async function loginStatus(req,res){
 
 async function logout(req,res){
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const tokenExists = await Token.findOneAndDelete({token:token})
+        console.log("te=",tokenExists)
         res.cookie("token","",{
             path:"/",
             httpOnly: true,
