@@ -16,6 +16,10 @@ const AddBookmark = ({ isOpen, onClose }) => {
   const {collection} = useParams();
   const userState = useSelector((state) => state.user);
   // const { isError, isSuccess, data, error } = useGetCollectionsQuery();
+  const location = useLocation();
+
+  const { collectionId, authorId } = location.state || {};
+
 
 
   const [addLinks] = useAddLinksMutation();

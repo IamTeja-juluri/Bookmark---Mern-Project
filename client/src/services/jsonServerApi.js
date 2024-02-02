@@ -56,10 +56,22 @@ export const jsonServerApi = createApi({
        }),
        invalidatesTags: ["Posts"]
     }),
-  
 
+    toggleLike: builder.mutation({
+      query: (payload) => ({
+          url: `http://localhost:5000/api/v1/collection/likes/${payload.collectionId}`,
+          method: "POST",
+          body: {}
+       }),
+       invalidatesTags: ["likes"]
+    }),
+  
+    getLikes: builder.query({
+      query: (collectionId) => `http://localhost:5000/api/v1/collection/likes/${collectionId}`,
+      providesTags: ["likes"]
+    }),
   
   }),
 });
 
-export const { useGetCollectionsQuery, useUpdateCollectionsMutation, useAddLinksMutation, useGetLinksQuery, useLogoutUserQuery, useLoginUserMutation} = jsonServerApi;
+export const { useGetCollectionsQuery, useUpdateCollectionsMutation, useAddLinksMutation, useGetLinksQuery, useLogoutUserQuery, useLoginUserMutation, useToggleLikeMutation, useGetLikesQuery} = jsonServerApi;
