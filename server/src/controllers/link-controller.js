@@ -68,7 +68,7 @@ async function updateLink(req, res) {
     const { linkId, authorId } = req.query;
     const userId = req.user._id;
     if (authorId.toString() !== userId.toString())
-      throw new Error(
+      throw new AppError(
         "You are not authorised to perform this action",
         StatusCodes.UNAUTHORIZED
       );
