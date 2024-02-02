@@ -16,4 +16,6 @@ router.post(
   CollectionController.createCollection
 );
 router.get("/", CollectionController.getAllCollections);
+router.patch("/",AuthMiddlewares.protect,CollectionController.updateCollection)
+router.delete("/",AuthMiddlewares.protect,CollectionController.deleteCollection)
 module.exports = router;
