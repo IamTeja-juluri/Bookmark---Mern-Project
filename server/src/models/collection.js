@@ -27,12 +27,6 @@ const collectionSchema = mongoose.Schema(
       type: Object,
       default: {},
     },
-    likes: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Like",
-      },
-    ],
     authorName: {
       type: String,
       default: "User",

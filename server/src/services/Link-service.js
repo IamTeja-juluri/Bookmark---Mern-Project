@@ -17,7 +17,7 @@ async function getLinks(data){
     try{
         const links = await linkRepository.get(data); 
         const sanitizedDataArray = links.map(link => {
-            const { _id, userId, __v, ...rest } = link._doc;
+            const { __v, ...rest } = link._doc;
             return rest;
           });
         return sanitizedDataArray;
@@ -31,7 +31,7 @@ async function getLatestLinks(data){
     try{
         const links = await linkRepository.getLatestLinks(data); 
         const sanitizedDataArray = links.map(link => {
-            const { _id, userId, __v, ...rest } = link._doc;
+            const { __v, ...rest } = link._doc;
             return rest;
           });
         return sanitizedDataArray;
@@ -41,6 +41,15 @@ async function getLatestLinks(data){
 
 }
 
+async function deleteLink(data){
+    try{
+        const link = await linkRepository.deleteOne(data)
+        return link
+    }catch(error){
+        throw new AppError('Cannot delete this link',StatusCodes.BAD_REQUEST)
+    }
+}
+
 module.exports={
-    createLink,getLinks,getLatestLinks
+    createLink,getLinks,getLatestLinks,deleteLink
 }

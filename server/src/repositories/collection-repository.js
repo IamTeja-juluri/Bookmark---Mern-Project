@@ -26,7 +26,7 @@ class collectionRepository extends CrudRepository{
         }
         else
             query={collectionType:'Public'}
-        const results = await Collection.find(query).sort({ createdAt: -1 }).populate('likes').exec()
+        const results = await Collection.find(query).sort({ createdAt: -1 })
         return results;
     }
 

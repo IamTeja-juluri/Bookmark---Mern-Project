@@ -1,6 +1,5 @@
 const {StatusCodes}=require('http-status-codes');
-const {LinkService, CollectionService }=require('../services');
-const {Collection} = require("../models")
+const {LinkService }=require('../services');
 const {SuccessResponse,ErrorResponse}=require('../utils/common');
 const AppError = require('../utils/errors/app-error');
 
@@ -8,10 +7,9 @@ async function createLink(req,res){
     try{
         const authorName=req.user.name
         const userId = req.user._id
-        const collectionName = req.query.name
-        const collection =  await Collection.findOne({name:collectionName})
-        const collectionId = collection._id
-        if(collection.userId.toString() !== userId.toString())
+        const collectionId = req.query.collectionId
+        const collectionAuthor = req.query.authorId
+        if(collectionAuthor.toString() !== userId.toString())
             throw new AppError(`You cannot add links to other users collection`,StatusCodes.FORBIDDEN)
         const {link,linkName} = req.body       
         const collectionLink = await LinkService.createLink({userId,authorName,link,linkName,collectionId});
@@ -27,10 +25,9 @@ async function createLink(req,res){
     }
 }
 
-async function getCollectionLinks(req,res){
+async function getLinks(req,res){
     try{
-        const collection = await CollectionService.getCollectionDetails({name:req.query.collectionName})
-        const links = await LinkService.getLinks({collectionId:collection._id})
+        const links = await LinkService.getLinks({collectionId:req.query.collectionId})
         SuccessResponse.data = links
         return res
                   .status(StatusCodes.OK)
@@ -79,7 +76,7 @@ async function updateLink(req,res){
         if(link.userId !== req.user._id)
             throw new Error("You are not authorised to perform this action",StatusCodes.UNAUTHORIZED)
         await newLink.save()
-        SuccessResponse.data = "Link Updated Successfully"
+        SuccessResponse.data = `${newLink.linkName} has been updated`
         return res
                   .status(StatusCodes.OK)
                   .json(SuccessResponse)
@@ -91,4 +88,27 @@ async function updateLink(req,res){
     }
 }
 
-module.exports={createLink,getCollectionLinks,getAnyLinksByQuery,getLatestLinks,updateLink}
+async function deleteLink(req,res){
+    try{
+        const {linkId,authorId} = req.query
+        const userId = req.user._id
+        if(authorId.toString() !== userId.toString())
+            throw new AppError('You are not authorised to perform this action',StatusCodes.FORBIDDEN)
+        const deletedLink = await  LinkService.deleteLink({_id:linkId,userId:authorId})
+        if(deletedLink.deletedCount > 0)
+            SuccessResponse.data = 'Link has been deleted'
+        else
+            SuccessResponse.data = 'Something went wrong while deleting'
+        return res
+                  .status(StatusCodes.OK)
+                  .json(SuccessResponse)
+    }catch(error){
+        ErrorResponse.error=error
+        return res
+                  .status(error.statusCode)
+                  .json(ErrorResponse)
+    }
+}
+
+
+module.exports={createLink,getLinks,getAnyLinksByQuery,getLatestLinks,updateLink,deleteLink}
