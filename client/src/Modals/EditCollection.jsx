@@ -20,7 +20,7 @@ const EditCollection = ({ isOpen, onClose, collectionData }) => {
 
   const [updateCollections] = useUpdateCollectionsMutation();
 
-console.log(collectionData);
+
   const {
     register,
     handleSubmit,
@@ -31,7 +31,7 @@ console.log(collectionData);
       name: collectionData.name || "", 
       description: collectionData.description || "", 
       collectionType: collectionData.collectionType || "", 
-      image: collectionData.image?.fileName || null,
+      
     },
     mode: "onChange",
   });
@@ -39,22 +39,22 @@ console.log(collectionData);
 
 
   const submitHandler = (data) => {
-    const { name, description, collectionType, image } = data;
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("description", description);
-    formData.append("collectionType", collectionType);
-    formData.append("image", image[0]); // Assuming you only allow a single file
+    // const { name, description, collectionType, image } = data;
+    // const formData = new FormData();
+    // formData.append("name", name);
+    // formData.append("description", description);
+    // formData.append("collectionType", collectionType);
     
-    updateCollections(formData)
-      .unwrap()
-      .then(() => {
-        toast.success("Collection added successfully!");
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error(error.data.message);
-      });
+    
+    // updateCollections(formData)
+    //   .unwrap()
+    //   .then(() => {
+    //     toast.success("Collection added successfully!");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     toast.error(error.data.message);
+    //   });
   };
 
  
@@ -150,30 +150,7 @@ console.log(collectionData);
                           Description
                         </label>
                       </div>
-                      <div className="relative">
-                        <input
-                          type="file"
-                          id="image"
-                          {...register("image", {
-                            required: {
-                              value: true,
-                              message: "Image is required",
-                            },
-                          })}
-                          className="peer placeholder-transparent h-11 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600 cursor-pointer text-xs text-center pt-4"
-                        />
-                        {errors.image?.message && (
-                          <p className="text-red-500 text-xs mt-1">
-                            {errors.image?.message}
-                          </p>
-                        )}
-                        <label
-                          htmlFor="image"
-                          className="absolute left-0 -top-3.5 text-black-600 font-bold text-base"
-                        >
-                          Image
-                        </label>
-                      </div>
+                      
                       <div className="relative">
                         <select
                           id="collectionType"

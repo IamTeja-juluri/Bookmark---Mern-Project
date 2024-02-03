@@ -26,9 +26,9 @@ const ProfilePicture = ({ avatar }) => {
           });
         },
         onSuccess: (data) => {
-          dispatch(userActions.setUserInfo(data));
+          //dispatch(userActions.setUserInfo(data));
                     setOpenCrop(false);
-          localStorage.setItem("account", JSON.stringify(data));
+          //localStorage.setItem("account", JSON.stringify(data));
           queryClient.invalidateQueries(["profile"]);
           toast.success("Profile Photo is removed");
         },
