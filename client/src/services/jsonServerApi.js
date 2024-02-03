@@ -4,7 +4,7 @@ const getToken = (state) => state.user?.userInfo?.accessToken || ''
 
 export const jsonServerApi = createApi({
   reducerPath: 'jsonServerApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api/v1',
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://bookmarkclub-yd05.onrender.com/api/v1',
   prepareHeaders: async (headers, { getState }) => {
     const token = getToken(getState());
     if (token) {
@@ -44,13 +44,13 @@ export const jsonServerApi = createApi({
     }),
     
     logoutUser: builder.query({
-      query: () => `http://localhost:5000/api/v1/user/logout`,
+      query: () => `https://bookmarkclub-yd05.onrender.com/api/v1/user/logout`,
       invalidatesTags: ["Posts"]
     }),
 
     loginUser: builder.mutation({
       query: (payload) => ({
-          url: `http://localhost:5000/api/v1/user/login`,
+          url: `https://bookmarkclub-yd05.onrender.com/api/v1/user/login`,
           method: "POST",
           body: payload
        }),
@@ -59,7 +59,7 @@ export const jsonServerApi = createApi({
 
     toggleLike: builder.mutation({
       query: (payload) => ({
-          url: `http://localhost:5000/api/v1/collection/likes/${payload.collectionId}`,
+          url: `https://bookmarkclub-yd05.onrender.com/api/v1/collection/likes/${payload.collectionId}`,
           method: "POST",
           body: {}
        }),
@@ -67,7 +67,7 @@ export const jsonServerApi = createApi({
     }),
   
     getLikes: builder.query({
-      query: (collectionId) => `http://localhost:5000/api/v1/collection/likes/${collectionId}`,
+      query: (collectionId) => `https://bookmarkclub-yd05.onrender.com/api/v1/collection/likes/${collectionId}`,
       providesTags: ["likes"]
     }),
   

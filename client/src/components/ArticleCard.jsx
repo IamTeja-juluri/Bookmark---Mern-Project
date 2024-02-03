@@ -59,7 +59,10 @@ const ArticleCard = ({ className, collection }) => {
             {collection.name}
           </h2>
           <div className="flex space-x-2 items-center">
-            <button className="text-white mx-2 rounded" onClick={handleEditClick}>
+            <button
+              className="text-white mx-2 rounded"
+              onClick={handleEditClick}
+            >
               <img src={images.editButton} className="w-auto h-8" alt="Edit" />
             </button>
             <button className="text-white rounded">
@@ -94,7 +97,7 @@ const ArticleCard = ({ className, collection }) => {
 
           <p className="ml-2 mr-2 text-white">{data?.data?.likes}</p>
           <p className="ml-auto text-white">
-            {(new Date(collection.createdAt)).toLocaleDateString("en-US", {
+            {new Date(collection.createdAt).toLocaleDateString("en-US", {
               day: "numeric",
               month: "short",
               year: "numeric",
@@ -108,7 +111,7 @@ const ArticleCard = ({ className, collection }) => {
       <EditCollection
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
-        collectionData={collection} 
+        collectionData={collection}
       />
     </div>
   );
