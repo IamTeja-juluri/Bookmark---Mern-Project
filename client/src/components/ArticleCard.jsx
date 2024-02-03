@@ -93,8 +93,13 @@ const ArticleCard = ({ className, collection }) => {
           )}
 
           <p className="ml-2 mr-2 text-white">{data?.data?.likes}</p>
-          <span className="text-blue-500 text-3xl">&#128278;</span>
-          <p className="mr-2 text-white">200</p>
+          <p className="ml-auto text-white">
+            {(new Date(collection.createdAt)).toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+          </p>
           <p className="ml-auto text-white">
             Authored By : {collection.authorName}
           </p>
