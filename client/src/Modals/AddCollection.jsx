@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useImperativeHandle, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ const AddCollection = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const userState = useSelector((state) => state.user);
-  // const { isError, isSuccess, data, error } = useGetCollectionsQuery();
+ 
 
   const [updateCollections] = useUpdateCollectionsMutation();
 
@@ -24,6 +24,7 @@ const AddCollection = ({ isOpen, onClose }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
@@ -35,7 +36,10 @@ const AddCollection = ({ isOpen, onClose }) => {
     mode: "onChange",
   });
 
-
+  const closeHandler = useCallback(() => {
+    reset();
+    onClose();
+  }, [onClose, reset]);
 
   const submitHandler = (data) => {
     const { name, description, collectionType, image } = data;
@@ -53,7 +57,8 @@ const AddCollection = ({ isOpen, onClose }) => {
       .catch((error) => {
         console.log(error);
         toast.error(error.data.message);
-      });
+      }).finally(() => closeHandler());
+
   };
 
  
@@ -68,7 +73,7 @@ const AddCollection = ({ isOpen, onClose }) => {
           <div className="relative py-3 sm:max-w-xl sm:mx-auto">
             <div
               className="absolute top-6 right-4 z-10 cursor-pointer text-gray-600 hover:text-gray-800 text-3xl"
-              onClick={onClose}
+              onClick={closeHandler}
             >
               <IoClose />
             </div>
@@ -212,7 +217,6 @@ const AddCollection = ({ isOpen, onClose }) => {
                         <button
                           type="submit"
                           disabled={!isValid }
-                          onClick={onClose}
                           className="flex bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 focus:outline-none text-white text-lg uppercase font-bold shadow-md rounded-full px-5 py-2"
                         >
                           Submit

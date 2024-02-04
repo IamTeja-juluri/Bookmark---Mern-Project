@@ -40,14 +40,18 @@ const postsData = [
 const Bookmarks = () => {
   const location = useLocation();
   const { collection } = useParams();
+  let { state } = useLocation();
 
-  const { isLoading, isError, isSuccess, data, error } = useGetLinksQuery(collection);
+  const { isLoading, isError, isSuccess, data, error } = useGetLinksQuery(state.collectionId);
   
 // useEffect(() => {
 //   if(isError){
 //         toast.error(error.data.message);
 //       }
 // }, [data])
+
+
+
 
   const breadCrumbsData = [
     { name: "Home", link: "/" },

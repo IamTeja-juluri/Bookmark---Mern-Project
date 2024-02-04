@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
@@ -25,6 +25,9 @@ const Header = () => {
   const logoutHandler = () => {
     dispatch(logout());
   };
+
+  let { state } = useLocation();
+ 
 
   return (
     <section className="bg-dark-hard sticky top-0 left-0 right-0 z-50 shadow-[0_10px_50px_rgba(8,_112,_184,_0.7)]">
@@ -124,6 +127,7 @@ const Header = () => {
         <AddBookmark
           isOpen={addBookmarkModal}
           onClose={() => setAddBookmarkModal(false)}
+          state={state}
         />
       ) : (
         <AddCollection

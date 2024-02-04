@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-
+import {  useSelector } from "react-redux";
 import { images } from "../constants";
 import { Link } from "react-router-dom";
 import EditCollection from "../Modals/EditCollection";
 import {
+  useDeleteCollectionsMutation,
   useGetLikesQuery,
   useToggleLikeMutation,
 } from "../services/jsonServerApi";
@@ -12,10 +13,12 @@ import toast from "react-hot-toast";
 const ArticleCard = ({ className, collection }) => {
   const [like, setlike] = useState(false);
   const [updateLikes] = useToggleLikeMutation();
+  const userState = useSelector((state) => state.user);
   const { isLoading, isError, isSuccess, data, error } = useGetLikesQuery(
     collection._id
   );
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [deleteCollections, response] = useDeleteCollectionsMutation();
 
   const handleEditClick = () => {
     setIsEditModalOpen(true);
@@ -33,19 +36,19 @@ const ArticleCard = ({ className, collection }) => {
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error.data.message);
+        toast.error(error.data.error);
       });
   };
+
+ 
 
   return (
     <div
       className={`rounded-xl overflow-hidden bg-dark-hard shadow-[0_10px_50px_rgba(8,_112,_184,_0.7)] ${className}`}
     >
       <Link
-        to={{
-          pathname: `/${collection.name}/bookmarks`,
-          state: { collectionId: "hds", authorId: "jdbhewb" },
-        }}
+        to= {collection.name + "/bookmarks"}
+        state= {{ collectionId: collection._id, authorId: collection.userId }}
       >
         <img
           src={collection.image?.filePath || images.Cta}
@@ -65,7 +68,7 @@ const ArticleCard = ({ className, collection }) => {
             >
               <img src={images.editButton} className="w-auto h-8" alt="Edit" />
             </button>
-            <button className="text-white rounded">
+            <button onClick={() => deleteCollections(collection)} className="text-white rounded">
               <img
                 src={images.deleteButton}
                 className="w-auto h-8"
@@ -77,7 +80,7 @@ const ArticleCard = ({ className, collection }) => {
         <p className="text-slate-300 mt-3 text-sm">{collection.description}</p>
 
         <div className="flex items-center" onClick={handleLikeChanges}>
-          {like ? (
+          {like && userState?.userInfo ? (
             <button className="">
               <img
                 src={images.liked}
@@ -111,7 +114,7 @@ const ArticleCard = ({ className, collection }) => {
       <EditCollection
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
-        collectionData={collection}
+        collectionData={{...collection}}
       />
     </div>
   );
