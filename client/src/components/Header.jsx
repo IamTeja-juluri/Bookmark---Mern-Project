@@ -7,7 +7,10 @@ import { logout } from "../store/actions/user";
 import { useLocation, useNavigate } from "react-router-dom";
 import AddBookmark from "../Modals/AddBookmark";
 import AddCollection from "../Modals/AddCollection";
-import { useLogoutUserQuery } from "../services/jsonServerApi";
+import {
+  useLogoutUserMutation,
+  useLogoutUserQuery,
+} from "../services/jsonServerApi";
 import toast from "react-hot-toast";
 
 const Header = () => {
@@ -22,12 +25,19 @@ const Header = () => {
 
   const isBookmarksPage = location.pathname.includes("/bookmarks");
 
+  const [logoutUser] = useLogoutUserMutation();
+
   const logoutHandler = () => {
-    dispatch(logout());
+    
+    logoutUser()
+      .unwrap()
+      .then(() => toast.success("Logged out successfully"))
+      .catch((error) => toast.error(error.message));
+
+      dispatch(logout());
   };
 
   let { state } = useLocation();
- 
 
   return (
     <section className="bg-dark-hard sticky top-0 left-0 right-0 z-50 shadow-[0_10px_50px_rgba(8,_112,_184,_0.7)]">

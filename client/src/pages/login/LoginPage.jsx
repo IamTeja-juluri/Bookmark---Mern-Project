@@ -42,10 +42,13 @@ const LoginPage = () => {
     login({ email, password })
     .unwrap()
     .then((data) => {
+      toast.success("User logged in successfully!");
       dispatch(userActions.setUserInfo(data.data));
       localStorage.setItem("account", JSON.stringify(data.data));
     })
-    .catch((error) => toast.error(error.message))
+    .catch((error) => {
+      console.log(error);
+      toast.error(error.data.error.explanation)});
   };
 
   return (

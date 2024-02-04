@@ -5,7 +5,7 @@ const getToken = (state) => state.user?.userInfo?.accessToken || "";
 export const jsonServerApi = createApi({
   reducerPath: "jsonServerApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://bookmarkclub-yd05.onrender.com/api/v1",
+    baseUrl: "http://localhost:5000/api/v1",
     prepareHeaders: async (headers, { getState }) => {
       const token = getToken(getState());
       if (token) {
@@ -45,14 +45,18 @@ export const jsonServerApi = createApi({
       invalidatesTags: ["Links"],
     }),
 
-    logoutUser: builder.query({
-      query: () => `https://bookmarkclub-yd05.onrender.com/api/v1/user/logout`,
+    logoutUser: builder.mutation({
+      query: () => ({
+        url: `/user/logout`,
+        method: "POST",
+        body: {}
+      }),
       invalidatesTags: ["Posts"],
     }),
 
     loginUser: builder.mutation({
       query: (payload) => ({
-        url: `https://bookmarkclub-yd05.onrender.com/api/v1/user/login`,
+        url: `/user/login`,
         method: "POST",
         body: payload,
       }),
@@ -61,7 +65,7 @@ export const jsonServerApi = createApi({
 
     toggleLike: builder.mutation({
       query: (payload) => ({
-        url: `https://bookmarkclub-yd05.onrender.com/api/v1/collection/likes/${payload.collectionId}`,
+        url: `/collection/likes/${payload.collectionId}`,
         method: "POST",
         body: {},
       }),
@@ -70,13 +74,13 @@ export const jsonServerApi = createApi({
 
     getLikes: builder.query({
       query: (collectionId) =>
-        `https://bookmarkclub-yd05.onrender.com/api/v1/collection/likes/${collectionId}`,
+        `/collection/likes/${collectionId}`,
       providesTags: ["likes"],
     }),
 
     editCollections: builder.mutation({
       query: (payload) => ({
-        url: `http://localhost:5000/api/v1/collection/?collectionId=${payload.collectionData._id}&authorId=${payload.collectionData.userId}`,
+        url: `/collection/?collectionId=${payload.collectionData._id}&authorId=${payload.collectionData.userId}`,
         method: "PATCH",
         body: { name: payload.name, description: payload.description },
       }),
@@ -85,11 +89,31 @@ export const jsonServerApi = createApi({
 
     deleteCollections: builder.mutation({
       query: (payload) => ({
-        url: `http://localhost:5000/api/v1/collection/?collectionId=${payload._id}&authorId=${payload.userId}`,
+        url: `/collection/?collectionId=${payload._id}&authorId=${payload.userId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Posts"],
     }),
+
+    changePassword: builder.mutation({
+      query: (payload) => ({
+        url: `/user/changePassword`,
+        method: "PATCH",
+        body: payload,
+      }),
+      invalidatesTags: ["Posts"],
+    }),
+
+    deleteLinks: builder.mutation({
+      query: (payload) => ({
+        url: `/collection/links?linkId=${payload.linkId}&authorId=${payload.userId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Links"],
+    }),
+
+
+
   }),
 });
 
@@ -98,10 +122,12 @@ export const {
   useUpdateCollectionsMutation,
   useAddLinksMutation,
   useGetLinksQuery,
-  useLogoutUserQuery,
   useLoginUserMutation,
+  useLogoutUserMutation,
   useToggleLikeMutation,
   useGetLikesQuery,
   useEditCollectionsMutation,
   useDeleteCollectionsMutation,
+  useChangePasswordMutation,
+  useDeleteLinksMutation,
 } = jsonServerApi;
