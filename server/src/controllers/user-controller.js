@@ -114,7 +114,7 @@ async function logout(req,res){
     try{
         const token = req.headers.authorization.split(' ')[1];
         const tokenExists = await Token.findOneAndDelete({token:token})
-        console.log("te=",tokenExists)
+        if(!tokenExists)   throw new AppError("Invalid Token",StatusCodes.BAD_REQUEST)
         res.cookie("token","",{
             path:"/",
             httpOnly: true,
