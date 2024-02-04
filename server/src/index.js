@@ -20,13 +20,16 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+
 app.use("/api", apiRoutes);
 
 mongoose
   .connect(ServerConfig.MONGO_URI)
   .then(() => {
     app.listen(ServerConfig.PORT, () => {
+      console.log('pathname=',__dirname)
       console.log(`Server running on port ${ServerConfig.PORT}`);
     });
   })
