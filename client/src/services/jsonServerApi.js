@@ -5,7 +5,7 @@ const getToken = (state) => state.user?.userInfo?.accessToken || "";
 export const jsonServerApi = createApi({
   reducerPath: "jsonServerApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/v1",
+    baseUrl: "https://bookmarkclub-yd05.onrender.com/api/v1",
     prepareHeaders: async (headers, { getState }) => {
       const token = getToken(getState());
       if (token) {
