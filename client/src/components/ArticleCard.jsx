@@ -73,13 +73,13 @@ const ArticleCard = ({ className, collection }) => {
         />
       </Link>
       <div className="p-5 bg-dark-hard">
-        <div className="flex flex-grow justify-between mb-2 items-center">
+        <div className="flex justify-between mb-2 items-center">
           <h2 className="font-roboto font-bold text-xl text-white md:text-xl lg:text-2xl">
             {collection.name}
           </h2>
           <div className="flex space-x-2 items-center">
             {userState.userInfo && userState.userInfo._id === collection.userId ? (
-              <div>
+              <div className="flex space-x-2 items-center" >
                 <button
                   className="text-white mx-2 rounded"
                   onClick={handleEditClick}

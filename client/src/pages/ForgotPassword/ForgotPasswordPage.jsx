@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
@@ -8,24 +8,28 @@ import { useDispatch, useSelector } from "react-redux";
 import MainLayout from "../../components/MainLayout";
 import { forgotPassword, login } from "../../services/index/users";
 import { userActions } from "../../store/reducers/userReducers";
+import { useForgotPasswordMutation } from "../../services/jsonServerApi";
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate();
-  const userState = useSelector((state) => state.user);
+  // const userState = useSelector((state) => state.user);
 
-  const { mutate, isLoading } = useMutation({
-    mutationFn: ({ email }) => {
-      return forgotPassword({ email });
-    },
-    onSuccess: (data) => {
-      console.log(data);
+  const [forgotPassword] = useForgotPasswordMutation();
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  // const { mutate, isLoading } = useMutation({
+  //   mutationFn: ({ email }) => {
+  //     return forgotPassword({ email });
+  //   },
+  //   onSuccess: (data) => {
+  //     console.log(data);
       
-    },
-    onError: (error) => {
-      toast.error(error.message);
-      console.log(error);
-    },
-  });
+  //   },
+  //   onError: (error) => {
+  //     toast.error(error.message);
+  //     console.log(error);
+  //   },
+  // });
 
   
   const {
@@ -41,7 +45,15 @@ const ForgotPasswordPage = () => {
 
   const submitHandler = (data) => {
     const { email } = data;
-    mutate({ email });
+    forgotPassword({email})
+    .unwrap()
+    .then(() => {
+      setIsSuccess(true);
+      toast.success("Email sent to the registered mail Id");
+    })
+    .catch((error) => {
+      toast.error(error.data.error.explanation);
+    });
   };
 
   return (
@@ -87,7 +99,7 @@ const ForgotPasswordPage = () => {
            
             <button
               type="submit"
-              disabled={!isValid || isLoading}
+              disabled={!isValid || isSuccess}
               className="bg-primary text-white font-bold text-lg py-4 px-8 w-full rounded-lg my-6 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               Send

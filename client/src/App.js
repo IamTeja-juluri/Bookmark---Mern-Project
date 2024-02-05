@@ -9,6 +9,7 @@ import LoginPage from "./pages/login/LoginPage";
 import ProfilePage from "./pages/profile/ProfilePage";
 import ForgotPasswordPage from "./pages/ForgotPassword/ForgotPasswordPage";
 import ChangePasswordPage from "./pages/ChangePassword/ChangePasswordPage";
+import ResetPasswordPage from "./pages/ResetPassword/ResetPasswordPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/change-password" element={<ChangePasswordPage />} />
+        <Route path="/api/v1/user/resetPassword/:token" element={<ResetPasswordPage />} />
       </Routes>
       <Toaster />
     </div>

@@ -5,7 +5,7 @@ const getToken = (state) => state.user?.userInfo?.accessToken || "";
 export const jsonServerApi = createApi({
   reducerPath: "jsonServerApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://bookmarkclub-yd05.onrender.com/api/v1",
+    baseUrl: "http://localhost:5000/api/v1",
     prepareHeaders: async (headers, { getState }) => {
       const token = getToken(getState());
       if (token) {
@@ -112,6 +112,24 @@ export const jsonServerApi = createApi({
       invalidatesTags: ["Links"],
     }),
 
+    forgotPassword: builder.mutation({
+      query: (payload) => ({
+        url: `/user/forgotPassword`,
+        method: "POST",
+        body: payload,
+      }),
+      
+    }),
+
+    resetPassword: builder.mutation({
+      query: (payload) => ({
+        url: `/user/resetPassword/${payload.token}`,
+        method: "PATCH",
+        body: {newPassword: payload.newPassword, confirmNewPassword: payload.confirmNewPassword},
+      }),
+      
+    }),
+
 
 
   }),
@@ -130,4 +148,6 @@ export const {
   useDeleteCollectionsMutation,
   useChangePasswordMutation,
   useDeleteLinksMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation
 } = jsonServerApi;
