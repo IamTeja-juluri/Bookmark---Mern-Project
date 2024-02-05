@@ -155,7 +155,7 @@ async function forgotPassword(req,res){
             createdAt : Date.now(),
             expiresAt : Date.now() + 30*60*1000
         }).save()
-        const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`
+        const resetUrl = `${process.env.FRONTEND_URL}/api/v1/user/resetpassword/${resetToken}`
         const message =`
         <h2>Hello ${user.name}</h2>
         <p>You requested for a password reset</p>
