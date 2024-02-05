@@ -9,5 +9,6 @@ router.post(
   LikeController.toggleLike
 );
 router.get("/:collectionId", LikeController.getLikesCount);
+router.get("/status/:collectionId",AuthMiddlewares.protect,LikeController.likeStatus)
 
 module.exports = router;

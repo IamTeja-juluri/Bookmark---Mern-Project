@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const { SuccessResponse, ErrorResponse } = require("../utils/common");
 const { Like } = require("../models");
+const AppError = require("../utils/errors/app-error");
 
 async function toggleLike(req, res) {
   try {
@@ -41,7 +42,25 @@ async function getLikesCount(req, res) {
   }
 }
 
+async function likeStatus(req,res){
+  try{
+    const {collectionId} = req.params
+    const userId = req.user._id
+    const like = await Like.findOne({userId,collectionId})
+    console.log('like=',like)
+    if(!like)  
+      SuccessResponse.data = "Not Liked"
+    else
+      SuccessResponse.data = "Liked"
+    return res.status(StatusCodes.OK).json(SuccessResponse)
+  }catch (error) {
+    ErrorResponse.error = error;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
 module.exports = {
   toggleLike,
   getLikesCount,
+  likeStatus
 };

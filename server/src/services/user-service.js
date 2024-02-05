@@ -15,7 +15,7 @@ async function createUser(data){
 
 async function getUser(data){
     try{
-        const user = await userRepository.get(data);
+        const user = await userRepository.getOne(data);
         if(!user)
             throw new AppError('No such user found', StatusCodes.NOT_FOUND);
         return user;

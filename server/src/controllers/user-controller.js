@@ -163,7 +163,7 @@ async function forgotPassword(req,res){
         <p>The reset link is valid only for 30 minutes</p>
         <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
         <p>Regards.....</p>
-        <p>Bookmarking.com Team</p> 
+        <p>bookmark-club.com Team</p> 
         `
         const subject = "Password Reset Request"
         const sendTo = user.email
