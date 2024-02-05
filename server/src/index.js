@@ -19,9 +19,13 @@ const corsOptions = {
   optionsSuccessStatus: 204,
 };
 
-app.use(cors(corsOptions));
-// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+app.use(cors());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+app.use((req, res, next) => {
+  res.setHeader('X-Frame-Options', 'ALLOW-FROM https://bookmark-club.onrender.com/');
+  next();
+});
 
 app.use("/api", apiRoutes);
 
