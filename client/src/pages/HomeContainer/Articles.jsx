@@ -73,7 +73,7 @@ const Articles = () => {
           onChange={handleCheckboxChange}
         />
         <label htmlFor="filterByUserCheckbox" className="ml-3 text-lg font-semibold text-white">
-          Filter by User
+          My Collections
         </label>
       </div>
       
