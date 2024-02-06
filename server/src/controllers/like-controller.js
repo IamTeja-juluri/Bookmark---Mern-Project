@@ -46,7 +46,7 @@ async function likeStatus(req,res){
   try{
     const {collectionId} = req.params
     const userId = req.user._id
-    const like = await Like.findOne({userId,collectionId})
+    const like = await Like.findOne({user:userId,collection:collectionId})
     console.log('like=',like)
     if(!like)  
       SuccessResponse.data = "Not Liked"
