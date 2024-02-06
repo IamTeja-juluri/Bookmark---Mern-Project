@@ -78,6 +78,12 @@ export const jsonServerApi = createApi({
       providesTags: ["likes"],
     }),
 
+    getLikesStatus: builder.query({
+      query: (collectionId) =>
+        `/collection/likes/status/${collectionId}`,
+      
+    }),
+
     editCollections: builder.mutation({
       query: (payload) => ({
         url: `/collection/?collectionId=${payload.collectionData._id}&authorId=${payload.collectionData.userId}`,
@@ -149,5 +155,6 @@ export const {
   useChangePasswordMutation,
   useDeleteLinksMutation,
   useForgotPasswordMutation,
-  useResetPasswordMutation
+  useResetPasswordMutation,
+  useGetLikesStatusQuery
 } = jsonServerApi;

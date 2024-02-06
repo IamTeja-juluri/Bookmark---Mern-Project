@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const signup = async ({ name, email, password, confirmPassword, phone }) => {
   try {
-    const {data} = await axios.post("https://bookmarkclub-yd05.onrender.com/api/v1/user/register", {
+    const {data} = await axios.post("http://localhost:5000/api/v1/user/register", {
       name,
       email,
       password,
@@ -22,7 +22,7 @@ export const signup = async ({ name, email, password, confirmPassword, phone }) 
 export const login = async ({ email, password }) => {
   try {
 
-    const { data } = await axios.post("https://bookmarkclub-yd05.onrender.com/api/v1/user/login", {
+    const { data } = await axios.post("http://localhost:5000/api/v1/user/login", {
       email,
       password,
     });
@@ -42,7 +42,7 @@ export const logout = async ({ token }) => {
       },
     };
 
-    const { data } = await axios.get(`https://bookmarkclub-yd05.onrender.com/api/v1/user/logout`, config);
+    const { data } = await axios.get(`http://localhost:5000/api/v1/user/logout`, config);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message)
@@ -59,7 +59,7 @@ export const getUserProfile = async ({ token }) => {
       },
     };
 
-    const { data } = await axios.get(`https://bookmarkclub-yd05.onrender.com/api/v1/user/info`, config);
+    const { data } = await axios.get(`http://localhost:5000/api/v1/user/info`, config);
     
     return data;
   } catch (error) {
@@ -78,7 +78,7 @@ export const updateProfile = async ({ token, userData }) => {
     };
 
     const { data } = await axios.patch(
-      `https://bookmarkclub-yd05.onrender.com/api/v1/user/updateprofile`,
+      `http://localhost:5000/api/v1/user/updateprofile`,
       userData,
       config
     );
@@ -100,7 +100,7 @@ export const updateProfilePicture = async ({ token, formData }) => {
     };
 
     const { data } = await axios.patch(
-      `https://bookmarkclub-yd05.onrender.com/api/v1/user/updateprofilepicture`,
+      `http://localhost:5000/api/v1/user/updateprofilepicture`,
       formData,
       config
     );
@@ -114,7 +114,7 @@ export const updateProfilePicture = async ({ token, formData }) => {
 
 export const forgotPassword = async ({ email }) => {
   try {
-    const { data } = await axios.post("https://bookmarkclub-yd05.onrender.com/api/v1/user/forgotPassword", {
+    const { data } = await axios.post("http://localhost:5000/api/v1/user/forgotPassword", {
       email
     });
     return data;

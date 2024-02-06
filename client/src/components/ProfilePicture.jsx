@@ -88,13 +88,13 @@ const ProfilePicture = ({ avatar }) => {
         onChange={handleFileChange} 
         />
       </div>
-      <button
+     {avatar ?( <button
         onClick={handleDeleteImage}
         type="button"
         className="border border-red-500 rounded-lg px-4 py-2 text-red-500"
       >
         Delete
-      </button>
+      </button>): null}
     </div>
     </>
   );

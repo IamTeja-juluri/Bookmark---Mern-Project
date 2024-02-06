@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { images } from "../constants";
 import { Link } from "react-router-dom";
@@ -6,6 +6,7 @@ import EditCollection from "../Modals/EditCollection";
 import {
   useDeleteCollectionsMutation,
   useGetLikesQuery,
+  useGetLikesStatusQuery,
   useToggleLikeMutation,
 } from "../services/jsonServerApi";
 import toast from "react-hot-toast";
@@ -19,6 +20,19 @@ const ArticleCard = ({ className, collection }) => {
   );
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [deleteCollections, response] = useDeleteCollectionsMutation();
+  
+  const {data:likeStatus} = useGetLikesStatusQuery(
+    collection._id
+  );
+
+ console.log("data",likeStatus);
+
+  useEffect(() => {
+    if(likeStatus?.data === "Liked")
+      setlike(true);
+
+    console.log(collection.name + " " + likeStatus?.data);
+  },[likeStatus])
 
   const handleEditClick = () => {
     setIsEditModalOpen(true);
