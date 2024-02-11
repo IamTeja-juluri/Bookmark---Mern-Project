@@ -5,7 +5,7 @@ const getToken = (state) => state.user?.userInfo?.accessToken || "";
 export const jsonServerApi = createApi({
   reducerPath: "jsonServerApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://bookmarkclub-yd05.onrender.com/api/v1",
+    baseUrl: "http://localhost:5000/api/v1",
     prepareHeaders: async (headers, { getState }) => {
       const token = getToken(getState());
       if (token) {
@@ -60,7 +60,7 @@ export const jsonServerApi = createApi({
         method: "POST",
         body: payload,
       }),
-      invalidatesTags: ["Posts"],
+      invalidatesTags: ["Posts","likeStatus"],
     }),
 
     toggleLike: builder.mutation({
@@ -69,7 +69,7 @@ export const jsonServerApi = createApi({
         method: "POST",
         body: {},
       }),
-      invalidatesTags: ["likes"],
+      invalidatesTags: ["likes","likeStatus"],
     }),
 
     getLikes: builder.query({
@@ -81,7 +81,7 @@ export const jsonServerApi = createApi({
     getLikesStatus: builder.query({
       query: (collectionId) =>
         `/collection/likes/status/${collectionId}`,
-      
+        providesTags: ["likeStatus"],
     }),
 
     editCollections: builder.mutation({

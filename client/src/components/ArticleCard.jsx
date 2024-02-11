@@ -25,7 +25,7 @@ const ArticleCard = ({ className, collection }) => {
     collection._id
   );
 
- console.log("data",likeStatus);
+
 
   useEffect(() => {
     if(likeStatus?.data === "Liked")
